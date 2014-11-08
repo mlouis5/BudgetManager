@@ -6,7 +6,7 @@
 package com.mac.budgetmanager.pojo.entities.dao.impl;
 
 import com.mac.budgetmanager.pojo.entities.Bill;
-import com.mac.budgettracker.entities.dao.AbstractRepository;
+import com.mac.budgetmanager.pojo.entities.dao.AbstractRepository;
 import org.springframework.stereotype.Component;
 
 /**

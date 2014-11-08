@@ -35,6 +35,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan({"com.mac", "com.mac.budgetmanager.pojo.entities",
     "com.mac.budgetmanager.processes", "com.mac.budgetmanager.pojo.entities.dao.impl"})
 public class AppConfig {
+    
+    @Bean
+    public BeanConfig beanConfig(){
+        return new BeanConfig();
+    }
+    
     @Bean
     @Primary
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {        
