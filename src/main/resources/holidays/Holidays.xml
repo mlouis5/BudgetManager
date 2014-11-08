@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<holidays xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="urn:holidays"  
+    xsi:schemaLocation="urn:holidays holidays.xsd">
+    <country name="United States">
+        <observedHolidays>
+            <fixedHoliday name="New Year's Day" aliases="" status="ACTIVE">
+                <type>FEDERAL</type>
+                <month>JANUARY</month>
+                <day>1</day>
+                <significance></significance>
+                <comment>Celebrates beginning of the Gregorian calendar year. Festivities include counting down to 12:00 midnight on the preceding night, New Year's Eve, often with fireworks display and party. The ball drop at Times Square in New York City has become a national New Year's festivity. Traditional end of Christmas and holiday season.</comment>
+                <subHolidays>
+                    <subHoliday name="New Year's Eve" aliases="" status="ACTIVE">
+                        <type>TRADITIONAL</type>
+                        <start>-1</start>
+                        <numDays>1</numDays>
+                        <significance></significance>
+                        <comment>Final Day of the Gregorian year. Usually accompanied by much celebration, such as party and fireworks. Virtually every company and retail outlet closes early, except for stores that sell alcoholic beverages and party supplies.</comment>
+                    </subHoliday>
+                </subHolidays>
+            </fixedHoliday>
+            <fixedHoliday name="Groundhog Day" aliases="" status="ACTIVE">
+                <type>TRADITIONAL</type>
+                <month>FEBRUARY</month>
+                <day>2</day>
+                <significance></significance>
+                <comment>The day on which folklore states that the behavior of a groundhog emerging from its burrow is said to predict the onset of Spring in Punxsutawney, Pennsylvania.</comment>
+            </fixedHoliday>
+            <fixedHoliday name="Valentine's Day" aliases="" status="ACTIVE">
+                <type>RELIGIOUS</type>
+                <month>FEBRUARY</month>
+                <day>14</day>
+                <significance></significance>
+                <comment>St. Valentine's Day, or simply Valentine's Day is named after one or more early Christian martyrs named Saint Valentine, and was established by Pope Gelasius I in 496 AD. Modern traditional celebration of love and romance, including the exchange of cards, candy, flowers, and other gifts.</comment>
+            </fixedHoliday>
+            <fixedHoliday name="St. Patrick's Day" aliases="" status="ACTIVE">
+                <type>RELIGIOUS</type>
+                <month>MARCH</month>
+                <day>17</day>
+                <significance></significance>
+                <comment>A holiday honoring Saint Patrick that celebrates Irish culture. Primary activity is simply the wearing of green clothing ("wearing o' the green"), although drinking beer dyed green is also popular. Big parades in some cities, such as in Chicago, where there is also a tradition of dying the Chicago River green.</comment>
+            </fixedHoliday>
+            <fixedHoliday name="April Fools' Day" aliases="the Feast of All Fools" status="ACTIVE">
+                <type>TRADITIONAL</type>
+                <month>APRIL</month>
+                <day>1</day>
+                <significance></significance>
+                <comment>A day that people commonly play tricks or jokes on family, friends, and co-workers, especially in English-speaking nations. Sometimes called "the Feast of All Fools" as a play on the feast days of saints; there is no evidence the holiday has any Christian religious origins.</comment>
+            </fixedHoliday>
+            <fixedHoliday name="Earth Day" aliases="" status="ACTIVE">
+                <type>TRADITIONAL</type>
+                <month>APRIL</month>
+                <day>22</day>
+                <significance></significance>
+                <comment>A celebration of environmentalism.</comment>
+            </fixedHoliday>
+            <fixedHoliday name="May Day" aliases="" status="ACTIVE">
+                <type>TRADITIONAL</type>
+                <month>MAY</month>
+                <day>1</day>
+                <significance></significance>
+                <comment>In most other countries, May 1 is International Workers' Day, the equivalent of Labor Day, and some Americans do observe May 1 in that context. But before it was a labor-related holiday, May Day was a Celtic and English holiday that celebrated the transition from Spring to Summer, and it is that holiday that those Americans and Canadians who still celebrate May Day call to mind.</comment>
+            </fixedHoliday>
+            <fixedHoliday name="Cinco de Mayo" aliases="" status="ACTIVE">
+                <type>TRADITIONAL</type>
+                <month>MAY</month>
+                <day>5</day>
+                <significance></significance>
+                <comment>Primarily a celebration of Mexican culture by Mexican-Americans living in the United States. Although this is the anniversary of the victory of the Mexican Army over the French at the Battle of Puebla in 1862, Cinco de Mayo is far more important in the USA than in Mexico itself, often celebrated even by non-Mexican-Americans. Additionally, this "holiday" is often mistaken by Americans as being Mexican Independence Day, which is actually observed on September 16.</comment>
+            </fixedHoliday>
+            <fixedHoliday name="Flag Day" aliases="" status="ACTIVE">
+                <type>TRADITIONAL</type>
+                <month>JUNE</month>
+                <day>14</day>
+                <significance></significance>
+                <comment>Commemorates the adoption of the flag of the United States, in 1777.</comment>
+            </fixedHoliday>
+            <fixedHoliday name="Independence Day" aliases="" status="ACTIVE">
+                <type>FEDERAL</type>
+                <month>JULY</month>
+                <day>4</day>
+                <significance></significance>
+                <comment>Celebrates the signing of the Declaration of Independence from British rule, also called the Fourth of July. Fireworks celebration are held in many cities throughout the nation.</comment>
+            </fixedHoliday>
+            <fixedHoliday name="Patriot Day" aliases="" status="ACTIVE">
+                <type>TRADITIONAL</type>
+                <month>SEPTEMBER</month>
+                <day>11</day>
+                <significance></significance>
+                <comment>Commemorates the attacks on the World Trade Center (New York City), The Pentagon (Washington, D.C.), and United Airlines Flight 93 in 2001.</comment>
+            </fixedHoliday>
+            <fixedHoliday name="Halloween" aliases="" status="ACTIVE">
+                <type>RELIGIOUS</type>
+                <month>OCTOBER</month>
+                <day>31</day>
+                <significance></significance>
+                <comment>Originally the end of the Celtic year, it now celebrates Eve of All Saint's Day. Decorations include jack o'lanterns. Costume parties and candy such as candy corn are also part of the holiday. Kids go "trick-or-treating" to neighbors who give away candy. Not generally observed by businesses.</comment>
+            </fixedHoliday>
+            <fixedHoliday name="Veterans Day" aliases="" status="ACTIVE">
+                <type>FEDERAL</type>
+                <month>NOVEMBER</month>
+                <day>11</day>
+                <significance></significance>
+                <comment>Honors all veterans of the United States armed forces. It is observed on November 11 to recall the end of World War I on that date in 1918 (major hostilities of World War I were formally ended at the 11th hour of the 11th day of the 11th month of 1918 when the Armistice with Germany went into effect).</comment>
+            </fixedHoliday>
+            <fixedHoliday name="Christmas Day" aliases="" status="ACTIVE">
+                <type>FEDERAL</type>
+                <month>DECEMBER</month>
+                <day>25</day>
+                <significance></significance>
+                <comment>The most widely celebrated holiday of the Christian year, Christmas is observed as a commemoration of the birth of Jesus of Nazareth.</comment>
+                <subHolidays>
+                    <subHoliday name="Christmas Eve" aliases="" status="ACTIVE">
+                        <type>RELIGIOUS</type>
+                        <start>-1</start>
+                        <numDays>1</numDays>
+                        <significance></significance>
+                        <comment>Day before Christmas. Virtually every business closes early, though a few remain open 24 hours.</comment>
+                    </subHoliday>
+                </subHolidays>
+            </fixedHoliday>
+            <fixedHoliday name="Pearl Harbor Remembrance Day" aliases="" status="ACTIVE">
+                <type>TRADITIONAL</type>
+                <month>DECEMBER</month>
+                <day>7</day>
+                <significance></significance>
+                <comment>Final Day of the Gregorian year. Usually accompanied by much celebration, such as party and fireworks. Virtually every company and retail outlet closes early, except for stores that sell alcoholic beverages and party supplies.</comment>
+            </fixedHoliday>                                               
+            <nonFixedHoliday name="Marin Luther King's Day" aliases="" status="ACTIVE">
+                <type>FEDERAL</type>                                               
+                <ordinal>THIRD</ordinal>
+                <dayOfWeek>MONDAY</dayOfWeek>
+                <month>JANUARY</month>
+                <significance></significance>
+                <comment>Honors Dr. Martin Luther King, Jr., Civil Rights leader, who was actually born on January 15, 1929; combined with other holidays in several states. Some cities and municipalities hold parades; and more recently, the 1994 King Holiday and Service Act, which was passed to encourage Americans to transform the King Holiday into a day of citizen action volunteer service, has gained in popularity (sometimes referred to as a National Day of Service).</comment>
+            </nonFixedHoliday>
+            <nonFixedHoliday name="Washington's Birthday" aliases="Presidents' Day" status="ACTIVE">
+                <type>FEDERAL</type>                                               
+                <ordinal>THIRD</ordinal>
+                <dayOfWeek>MONDAY</dayOfWeek>
+                <month>FEBRUARY</month>
+                <significance></significance>
+                <comment>Washington's Birthday was first declared a federal holiday by an 1879 act of Congress. The Uniform Holidays Act, 1968, shifted the date of the commemoration of Washington's Birthday from February 22 to the third Monday in February (between February 15 and 21, meaning the observed holiday never falls on Washington's actual birthday). Because of this, combined with the fact that President Lincoln's birthday falls on February 12, many people now refer to this holiday as "Presidents' Day" and consider it a day honoring all American presidents. However, neither the Uniform Holidays Act nor any subsequent law changed the name of the holiday from Washington's Birthday to Presidents' Day.</comment>
+            </nonFixedHoliday>
+            <nonFixedHoliday name="Arbor Day" aliases="" status="ACTIVE">
+                <type>TRADITIONAL</type>                                     
+                <ordinal>LAST</ordinal>
+                <dayOfWeek>FRIDAY</dayOfWeek>
+                <month>APRIL</month>
+                <significance></significance>
+                <comment>Honors mothers and motherhood (made a "federal holiday" by Presidential order, although most federal agencies are already closed on Sundays)</comment>
+            </nonFixedHoliday>
+            <nonFixedHoliday name="Mother's Day" aliases="" status="ACTIVE">
+                <type>FEDERAL</type>                                               
+                <ordinal>SECOND</ordinal>
+                <dayOfWeek>SUNDAY</dayOfWeek>
+                <month>MAY</month>
+                <significance></significance>
+                <comment>Honors mothers and motherhood (made a "federal holiday" by Presidential order, although most federal agencies are already closed on Sundays)</comment>
+            </nonFixedHoliday>
+            <nonFixedHoliday name="Memorial Day" aliases="" status="ACTIVE">
+                <type>FEDERAL</type>                                               
+                <ordinal>LAST</ordinal>
+                <dayOfWeek>MONDAY</dayOfWeek>
+                <month>MAY</month>
+                <significance></significance>
+                <comment>Honors the nation's war dead from the Civil War onwards; marks the unofficial beginning of the summer season. (traditionally May 30, shifted by the Uniform Holidays Act 1968)</comment>
+            </nonFixedHoliday>
+            <nonFixedHoliday name="Father's Day" aliases="" status="ACTIVE">
+                <type>TRADITIONAL</type>                                     
+                <ordinal>THIRD</ordinal>
+                <dayOfWeek>SUNDAY</dayOfWeek>
+                <month>JUNE</month>
+                <significance></significance>
+                <comment>Honors fathers and fatherhood.</comment>
+            </nonFixedHoliday>
+            <nonFixedHoliday name="Labor Day" aliases="" status="ACTIVE">
+                <type>FEDERAL</type>                                               
+                <ordinal>FIRST</ordinal>
+                <dayOfWeek>MONDAY</dayOfWeek>
+                <month>SEPTEMBER</month>
+                <significance></significance>
+                <comment>Celebrates the achievements of workers and the labor movement; marks the unofficial end of the summer season.</comment>
+            </nonFixedHoliday>
+            <nonFixedHoliday name="Columbus Day" aliases="" status="ACTIVE">
+                <type>FEDERAL</type>                                               
+                <ordinal>SECOND</ordinal>
+                <dayOfWeek>MONDAY</dayOfWeek>
+                <month>OCTOBER</month>
+                <significance></significance>
+                <comment>Honors Christopher Columbus, traditional discoverer of the Americas. In some areas it is also a celebration of Italian culture and heritage. (traditionally October 12)</comment>
+            </nonFixedHoliday>
+            <nonFixedHoliday name="Thanksgiving Day" aliases="" status="ACTIVE">
+                <type>FEDERAL</type>                                               
+                <ordinal>FOURTH</ordinal>
+                <dayOfWeek>THURSDAY</dayOfWeek>
+                <month>NOVEMBER</month>
+                <significance></significance>
+                <comment>Traditionally celebrates the giving of thanks for the autumn harvest. Traditionally includes the sharing of a turkey dinner.</comment>
+                <subHolidays>
+                    <subHoliday name="Black Friday" aliases="" status="ACTIVE">
+                        <type>TRADITIONAL</type>
+                        <start>+1</start>
+                        <numDays>1</numDays>
+                        <significance></significance>
+                        <comment>Traditionally the beginning of the Christmas shopping season in the United States. "Black Friday" is not a holiday under that name, but California and some other states observe "The Day After Thanksgiving" as a holiday for state government employees. Virtually all schools, colleges, and universities are also closed, along with many non-retail private sector businesses. Federal government offices, post offices and federally chartered banks must open on Black Friday (unless the President issues an executive order or proclamation allowing them to close). It is called "Black Friday" because it begins the sales period when most American retailers make their profits for the year. Contrary to popular belief, Black Friday is not the busiest sales day of the year (that honor belongs to Christmas Eve, December 24). Rather, it is the barometer by which retailers are able to gauge December sales and whether they will indeed end the year "in the black" (instead of "in the red"). A busy Black Friday almost invariably indicates a busy shopping season, while poor sales on Black Friday usually herald a very slow season.</comment>
+                    </subHoliday>
+                </subHolidays>
+            </nonFixedHoliday>            
+            <derivedHoliday name="Easter" aliases="" status="ACTIVE">
+                <type>RELIGIOUS</type>                                           
+                <method>getEasterDate</method>
+                <parameters>
+                    <parameter type="integer" length="4" />
+                </parameters>
+                <significance></significance>
+                <comment>Celebration of the resurrection of Jesus in most Western Christian churches. A minority of Protestant churches do not observe Easter. Eastern Orthodox (including Western Rite), Oriental Orthodox and some Neo-Celtic churches observe Easter according to a different calendar, usually on a later Sunday (thus they also observe Palm Sunday and Good Friday on different days than Western Christians). Many Americans decorate hard-boiled eggs and give baskets of candy, fruit, toys and so on, especially to children; but gifts of age-appropriate Easter baskets for the elderly, the infirm and the needy are increasingly popular. An annual Easter Egg Roll has been held at the White House South Lawn for young children on Easter Monday since President Hayes started the tradition in 1878.[48] Not a federal holiday due to the fact that it always falls on a Sunday, which is a non-working day for federal and state employees. Many companies that are normally open on Sunday close for Easter.</comment>
+                <subHolidays>
+                    <derivedHoliday name="Good Friday" aliases="" status="ACTIVE">
+                        <type>RELIGIOUS</type>                                           
+                        <method precondition="getEasterDate">getGoodFridayDate</method>
+                        <parameters>
+                            <parameter type="Date" />
+                        </parameters>
+                        <significance></significance>
+                        <comment>Celebration of the resurrection of Jesus in most Western Christian churches. A minority of Protestant churches do not observe Easter. Eastern Orthodox (including Western Rite), Oriental Orthodox and some Neo-Celtic churches observe Easter according to a different calendar, usually on a later Sunday (thus they also observe Palm Sunday and Good Friday on different days than Western Christians). Many Americans decorate hard-boiled eggs and give baskets of candy, fruit, toys and so on, especially to children; but gifts of age-appropriate Easter baskets for the elderly, the infirm and the needy are increasingly popular. An annual Easter Egg Roll has been held at the White House South Lawn for young children on Easter Monday since President Hayes started the tradition in 1878.[48] Not a federal holiday due to the fact that it always falls on a Sunday, which is a non-working day for federal and state employees. Many companies that are normally open on Sunday close for Easter.</comment>
+                    </derivedHoliday>
+                    <derivedHoliday name="Palm Sunday" aliases="" status="ACTIVE">
+                        <type>RELIGIOUS</type>                                           
+                        <method precondition="getEasterDate">getPalmSundayDate</method>
+                        <parameters>
+                            <parameter type="Date" />
+                        </parameters>
+                        <significance></significance>
+                        <comment>Celebration to commemorate the entry of Jesus into Jerusalem.</comment>
+                    </derivedHoliday>
+                </subHolidays>
+            </derivedHoliday>
+        </observedHolidays>
+    </country>
+</holidays>

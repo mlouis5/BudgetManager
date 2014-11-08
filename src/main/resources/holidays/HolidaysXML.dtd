@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+    TODO define vocabulary identification
+    PUBLIC ID: -//vendor//vocabulary//EN
+    SYSTEM ID: http://server/path/HolidaysXML.dtd
+
+-->
+
+<!--
+    An example how to use this DTD from your XML document:
+
+    <?xml version="1.0"?>
+
+    <!DOCTYPE holidays SYSTEM "HolidaysXML.dtd">
+
+    <holidays>
+    ...
+    </holidays>
+-->
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT holidays (country)*>
+<!ATTLIST holidays
+    xmlns CDATA #IMPLIED
+    xsi:schemaLocation CDATA #IMPLIED
+    xmlns:xsi CDATA #IMPLIED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT country (observedHolidays)*>
+<!ATTLIST country
+    name CDATA #IMPLIED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT observedHolidays (fixedHoliday|nonFixedHoliday|derivedHoliday)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT fixedHoliday (type|month|day|beginYear|endYear|significance|comment|preHolidays)*>
+<!ATTLIST fixedHoliday
+    name CDATA #IMPLIED
+    aliases CDATA #IMPLIED
+    status CDATA #IMPLIED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT type (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT month (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT day (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT beginYear (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT endYear (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT significance EMPTY>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT comment (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT preHolidays (preHoliday|derivedHoliday)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT preHoliday (type|start|numDays|beginYear|endYear|significance|comment)*>
+<!ATTLIST preHoliday
+    name CDATA #IMPLIED
+    aliases CDATA #IMPLIED
+    status CDATA #IMPLIED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT start (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT numDays (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT nonFixedHoliday (type|ordinal|dayOfWeek|month|beginYear|endYear|significance|comment|postHolidays)*>
+<!ATTLIST nonFixedHoliday
+    name CDATA #IMPLIED
+    aliases CDATA #IMPLIED
+    status CDATA #IMPLIED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT ordinal (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT dayOfWeek (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT postHolidays (postHoliday)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT postHoliday (type|start|numDays|beginYear|endYear|significance|comment)*>
+<!ATTLIST postHoliday
+    name CDATA #IMPLIED
+    aliases CDATA #IMPLIED
+    status CDATA #IMPLIED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT derivedHoliday (type|method|parameters|beginYear|endYear|significance|comment|preHolidays)*>
+<!ATTLIST derivedHoliday
+    name CDATA #IMPLIED
+    aliases CDATA #IMPLIED
+    status CDATA #IMPLIED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT method (#PCDATA)>
+<!ATTLIST method
+    precondition CDATA #IMPLIED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT parameters (parameter)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT parameter EMPTY>
+<!ATTLIST parameter
+    type CDATA #IMPLIED
+    length CDATA #IMPLIED
+  >

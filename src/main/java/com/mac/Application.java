@@ -1,0 +1,28 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.mac;
+
+import java.util.Arrays;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
+
+/**
+ *
+ * @author MacDerson
+ */
+public class Application {
+    public static void main(String[] args) {
+        ApplicationContext ctx = SpringApplication.run(AppConfig.class);
+
+        System.out.println("Let's inspect the beans provided by Spring Boot:");
+        
+        String[] beanNames = ctx.getBeanDefinitionNames();
+        Arrays.sort(beanNames);
+        for (String beanName : beanNames) {
+            System.out.println(beanName);
+        }
+    }    
+}

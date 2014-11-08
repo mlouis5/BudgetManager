@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE SAX-bindings PUBLIC "-//XML Module//DTD SAX Bindings 1.0//EN" "">
+<SAX-bindings version='1'>
+	<bind element='country' method='country' type='CONTAINER' ></bind>
+	<bind element='fixedHoliday' method='fixedHoliday' type='CONTAINER' ></bind>
+	<bind element='derivedHoliday' method='derivedHoliday' type='CONTAINER' ></bind>
+	<bind element='postHoliday' method='postHoliday' type='CONTAINER' ></bind>
+	<bind element='method' method='method' type='DATA' ></bind>
+	<bind element='start' method='start' type='DATA' ></bind>
+	<bind element='beginYear' method='beginYear' type='DATA' ></bind>
+	<bind element='numDays' method='numDays' type='DATA' ></bind>
+	<bind element='preHoliday' method='preHoliday' type='CONTAINER' ></bind>
+	<bind element='type' method='type' type='DATA' ></bind>
+	<bind element='endYear' method='endYear' type='DATA' ></bind>
+	<bind element='significance' method='significance' type='EMPTY' ></bind>
+	<bind element='preHolidays' method='preHolidays' type='CONTAINER' ></bind>
+	<bind element='dayOfWeek' method='dayOfWeek' type='DATA' ></bind>
+	<bind element='holidays' method='holidays' type='CONTAINER' ></bind>
+	<bind element='month' method='month' type='DATA' ></bind>
+	<bind element='observedHolidays' method='observedHolidays' type='CONTAINER' ></bind>
+	<bind element='postHolidays' method='postHolidays' type='CONTAINER' ></bind>
+	<bind element='parameter' method='parameter' type='EMPTY' ></bind>
+	<bind element='comment' method='comment' type='DATA' ></bind>
+	<bind element='day' method='day' type='DATA' ></bind>
+	<bind element='parameters' method='parameters' type='CONTAINER' ></bind>
+	<bind element='nonFixedHoliday' method='nonFixedHoliday' type='CONTAINER' ></bind>
+	<bind element='ordinal' method='ordinal' type='DATA' ></bind>
+</SAX-bindings>

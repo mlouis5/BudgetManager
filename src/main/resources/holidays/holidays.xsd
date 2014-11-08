@@ -1,0 +1,525 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:holidays" xmlns="urn:holidays" elementFormDefault="qualified">
+    <xsd:element name="holidays">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="country">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="observedHolidays">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="fixedHoliday" maxOccurs="unbounded" minOccurs="0">
+                                            <xsd:complexType>
+                                                <xsd:sequence>
+                                                    <xsd:element name="type">
+                                                        <xsd:simpleType>
+                                                            <xsd:restriction base="xsd:string">
+                                                                <xsd:enumeration value="FEDERAL"/>
+                                                                <xsd:enumeration value="TRADITIONAL"/>
+                                                                <xsd:enumeration value="RELIGIOUS"/>
+                                                            </xsd:restriction>
+                                                        </xsd:simpleType>
+                                                    </xsd:element>
+                                                    <xsd:element name="month">
+                                                        <xsd:simpleType>
+                                                            <xsd:restriction base="xsd:string">
+                                                                <xsd:enumeration value="JANUARY"/>
+                                                                <xsd:enumeration value="FEBRUARY"/>
+                                                                <xsd:enumeration value="MARCH"/>
+                                                                <xsd:enumeration value="APRIL"/>
+                                                                <xsd:enumeration value="MAY"/>
+                                                                <xsd:enumeration value="JUNE"/>
+                                                                <xsd:enumeration value="JULY"/>
+                                                                <xsd:enumeration value="AUGUST"/>
+                                                                <xsd:enumeration value="SEPTEMBER"/>
+                                                                <xsd:enumeration value="OCTOBER"/>
+                                                                <xsd:enumeration value="NOVEMBER"/>
+                                                                <xsd:enumeration value="DECEMBER"/>
+                                                            </xsd:restriction>
+                                                        </xsd:simpleType>
+                                                    </xsd:element>
+                                                    <xsd:element name="day">
+                                                        <xsd:simpleType>
+                                                            <xsd:restriction base="xsd:integer">
+                                                                <xsd:minInclusive value="1"/>
+                                                                <xsd:maxInclusive value="31"/>
+                                                            </xsd:restriction>
+                                                        </xsd:simpleType>
+                                                    </xsd:element>
+                                                    <xsd:element name="beginYear" minOccurs="0" maxOccurs="1"/>
+                                                    <xsd:element name="endYear" minOccurs="0" maxOccurs="1"/>
+                                                    <xsd:element type="xsd:string" name="significance"/>
+                                                    <xsd:element type="xsd:string" name="comment"/>
+                                                    <xsd:element name="preHolidays" minOccurs="0" maxOccurs="1">
+                                                        <xsd:complexType>
+                                                            <xsd:sequence>
+                                                                <xsd:element name="preHoliday" minOccurs="1" maxOccurs="unbounded">
+                                                                    <xsd:complexType>
+                                                                        <xsd:sequence>
+                                                                            <xsd:element name="type">
+                                                                                <xsd:simpleType>
+                                                                                    <xsd:restriction base="xsd:string">
+                                                                                        <xsd:enumeration value="FEDERAL"/>
+                                                                                        <xsd:enumeration value="TRADITIONAL"/>
+                                                                                        <xsd:enumeration value="RELIGIOUS"/>
+                                                                                    </xsd:restriction>
+                                                                                </xsd:simpleType>
+                                                                            </xsd:element>
+                                                                            <xsd:element type="xsd:byte" name="start"/>
+                                                                            <xsd:element type="xsd:byte" name="numDays"/>
+                                                                            <xsd:element name="beginYear" minOccurs="0" maxOccurs="1"/>
+                                                                            <xsd:element name="endYear" minOccurs="0" maxOccurs="1"/>
+                                                                            <xsd:element type="xsd:string" name="significance"/>
+                                                                            <xsd:element type="xsd:string" name="comment"/>
+                                                                        </xsd:sequence>
+                                                                        <xsd:attribute type="xsd:string" name="name" use="required"/>
+                                                                        <xsd:attribute type="xsd:string" name="aliases" use="optional"/>
+                                                                        <xsd:attribute name="status" use="required">
+                                                                            <xsd:simpleType>
+                                                                                <xsd:restriction base="xsd:string">
+                                                                                    <xsd:enumeration value="ACTIVE"/>
+                                                                                    <xsd:enumeration value="INACTIVE"/>
+                                                                                    <xsd:enumeration value="ABOLISHED"/>
+                                                                                </xsd:restriction>
+                                                                            </xsd:simpleType>
+                                                                        </xsd:attribute>
+                                                                    </xsd:complexType>
+                                                                </xsd:element>
+                                                            </xsd:sequence>
+                                                        </xsd:complexType>
+                                                    </xsd:element>
+                                                    <xsd:element name="postHolidays" minOccurs="0">
+                                                        <xsd:complexType>
+                                                            <xsd:sequence>
+                                                                <xsd:element name="postHoliday">
+                                                                    <xsd:complexType>
+                                                                        <xsd:sequence>
+                                                                            <xsd:element name="type">
+                                                                                <xsd:simpleType>
+                                                                                    <xsd:restriction base="xsd:string">
+                                                                                        <xsd:enumeration value="FEDERAL"/>
+                                                                                        <xsd:enumeration value="TRADITIONAL"/>
+                                                                                        <xsd:enumeration value="RELIGIOUS"/>
+                                                                                    </xsd:restriction>
+                                                                                </xsd:simpleType>
+                                                                            </xsd:element>
+                                                                            <xsd:element type="xsd:byte" name="start"/>
+                                                                            <xsd:element type="xsd:byte" name="numDays"/>
+                                                                            <xsd:element name="beginYear" minOccurs="0" maxOccurs="1"/>
+                                                                            <xsd:element name="endYear" minOccurs="0" maxOccurs="1"/>
+                                                                            <xsd:element type="xsd:string" name="significance"/>
+                                                                            <xsd:element type="xsd:string" name="comment"/>
+                                                                        </xsd:sequence>
+                                                                        <xsd:attribute type="xsd:string" name="name" use="required"/>
+                                                                        <xsd:attribute type="xsd:string" name="aliases" use="optional"/>
+                                                                        <xsd:attribute name="status" use="required">
+                                                                            <xsd:simpleType>
+                                                                                <xsd:restriction base="xsd:string">
+                                                                                    <xsd:enumeration value="ACTIVE"/>
+                                                                                    <xsd:enumeration value="INACTIVE"/>
+                                                                                    <xsd:enumeration value="ABOLISHED"/>
+                                                                                </xsd:restriction>
+                                                                            </xsd:simpleType>
+                                                                        </xsd:attribute>
+                                                                    </xsd:complexType>
+                                                                </xsd:element>
+                                                            </xsd:sequence>
+                                                        </xsd:complexType>
+                                                    </xsd:element>
+                                                </xsd:sequence>
+                                                <xsd:attribute type="xsd:string" name="name" use="required"/>
+                                                <xsd:attribute type="xsd:string" name="aliases" use="optional"/>
+                                                <xsd:attribute name="status" use="required">
+                                                    <xsd:simpleType>
+                                                        <xsd:restriction base="xsd:string">
+                                                            <xsd:enumeration value="ACTIVE"/>
+                                                            <xsd:enumeration value="INACTIVE"/>
+                                                            <xsd:enumeration value="ABOLISHED"/>
+                                                        </xsd:restriction>
+                                                    </xsd:simpleType>
+                                                </xsd:attribute>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="nonFixedHoliday" maxOccurs="unbounded" minOccurs="0">
+                                            <xsd:complexType>
+                                                <xsd:sequence>
+                                                    <xsd:element name="type">
+                                                        <xsd:simpleType>
+                                                            <xsd:restriction base="xsd:string">
+                                                                <xsd:enumeration value="FEDERAL"/>
+                                                                <xsd:enumeration value="TRADITIONAL"/>
+                                                                <xsd:enumeration value="RELIGIOUS"/>
+                                                            </xsd:restriction>
+                                                        </xsd:simpleType>
+                                                    </xsd:element>
+                                                    <xsd:element name="ordinal">
+                                                        <xsd:simpleType>
+                                                            <xsd:restriction base="xsd:string">
+                                                                <xsd:enumeration value="FIRST"/>
+                                                                <xsd:enumeration value="SECOND"/>
+                                                                <xsd:enumeration value="THIRD"/>
+                                                                <xsd:enumeration value="FOURTH"/>
+                                                                <xsd:enumeration value="LAST"/>
+                                                            </xsd:restriction>
+                                                        </xsd:simpleType>
+                                                    </xsd:element>
+                                                    <xsd:element name="dayOfWeek">
+                                                        <xsd:simpleType>
+                                                            <xsd:restriction base="xsd:string">
+                                                                <xsd:enumeration value="MONDAY"/>
+                                                                <xsd:enumeration value="TUESDAY"/>
+                                                                <xsd:enumeration value="WEDNESDAY"/>
+                                                                <xsd:enumeration value="THURSDAY"/>
+                                                                <xsd:enumeration value="FRIDAY"/>
+                                                                <xsd:enumeration value="SATURDAY"/>
+                                                                <xsd:enumeration value="SUNDAY"/>
+                                                            </xsd:restriction>
+                                                        </xsd:simpleType>
+                                                    </xsd:element>
+                                                    <xsd:element name="month">
+                                                        <xsd:simpleType>
+                                                            <xsd:restriction base="xsd:string">
+                                                                <xsd:enumeration value="JANUARY"/>
+                                                                <xsd:enumeration value="FEBRUARY"/>
+                                                                <xsd:enumeration value="MARCH"/>
+                                                                <xsd:enumeration value="APRIL"/>
+                                                                <xsd:enumeration value="MAY"/>
+                                                                <xsd:enumeration value="JUNE"/>
+                                                                <xsd:enumeration value="JULY"/>
+                                                                <xsd:enumeration value="AUGUST"/>
+                                                                <xsd:enumeration value="SEPTEMBER"/>
+                                                                <xsd:enumeration value="OCTOBER"/>
+                                                                <xsd:enumeration value="NOVEMBER"/>
+                                                                <xsd:enumeration value="DECEMBER"/>
+                                                            </xsd:restriction>
+                                                        </xsd:simpleType>
+                                                    </xsd:element>
+                                                    <xsd:element name="beginYear" minOccurs="0" maxOccurs="1"/>
+                                                    <xsd:element name="endYear" minOccurs="0" maxOccurs="1"/>
+                                                    <xsd:element type="xsd:string" name="significance"/>
+                                                    <xsd:element type="xsd:string" name="comment"/>
+                                                    <xsd:element name="preHolidays" minOccurs="0" maxOccurs="1">
+                                                        <xsd:complexType>
+                                                            <xsd:sequence>
+                                                                <xsd:element name="preHoliday" minOccurs="1" maxOccurs="unbounded">
+                                                                    <xsd:complexType>
+                                                                        <xsd:sequence>
+                                                                            <xsd:element name="type">
+                                                                                <xsd:simpleType>
+                                                                                    <xsd:restriction base="xsd:string">
+                                                                                        <xsd:enumeration value="FEDERAL"/>
+                                                                                        <xsd:enumeration value="TRADITIONAL"/>
+                                                                                        <xsd:enumeration value="RELIGIOUS"/>
+                                                                                    </xsd:restriction>
+                                                                                </xsd:simpleType>
+                                                                            </xsd:element>
+                                                                            <xsd:element type="xsd:byte" name="start"/>
+                                                                            <xsd:element type="xsd:byte" name="numDays"/>
+                                                                            <xsd:element name="beginYear" minOccurs="0" maxOccurs="1"/>
+                                                                            <xsd:element name="endYear" minOccurs="0" maxOccurs="1"/>
+                                                                            <xsd:element type="xsd:string" name="significance"/>
+                                                                            <xsd:element type="xsd:string" name="comment"/>
+                                                                        </xsd:sequence>
+                                                                        <xsd:attribute type="xsd:string" name="name" use="required"/>
+                                                                        <xsd:attribute type="xsd:string" name="aliases" use="optional"/>
+                                                                        <xsd:attribute name="status" use="required">
+                                                                            <xsd:simpleType>
+                                                                                <xsd:restriction base="xsd:string">
+                                                                                    <xsd:enumeration value="ACTIVE"/>
+                                                                                    <xsd:enumeration value="INACTIVE"/>
+                                                                                    <xsd:enumeration value="ABOLISHED"/>
+                                                                                </xsd:restriction>
+                                                                            </xsd:simpleType>
+                                                                        </xsd:attribute>
+                                                                    </xsd:complexType>
+                                                                </xsd:element>
+                                                            </xsd:sequence>
+                                                        </xsd:complexType>
+                                                    </xsd:element>
+                                                    <xsd:element name="postHolidays" minOccurs="0">
+                                                        <xsd:complexType>
+                                                            <xsd:sequence>
+                                                                <xsd:element name="postHoliday">
+                                                                    <xsd:complexType>
+                                                                        <xsd:sequence>
+                                                                            <xsd:element name="type">
+                                                                                <xsd:simpleType>
+                                                                                    <xsd:restriction base="xsd:string">
+                                                                                        <xsd:enumeration value="FEDERAL"/>
+                                                                                        <xsd:enumeration value="TRADITIONAL"/>
+                                                                                        <xsd:enumeration value="RELIGIOUS"/>
+                                                                                    </xsd:restriction>
+                                                                                </xsd:simpleType>
+                                                                            </xsd:element>
+                                                                            <xsd:element type="xsd:byte" name="start"/>
+                                                                            <xsd:element type="xsd:byte" name="numDays"/>
+                                                                            <xsd:element name="beginYear" minOccurs="0" maxOccurs="1"/>
+                                                                            <xsd:element name="endYear" minOccurs="0" maxOccurs="1"/>
+                                                                            <xsd:element type="xsd:string" name="significance"/>
+                                                                            <xsd:element type="xsd:string" name="comment"/>
+                                                                        </xsd:sequence>
+                                                                        <xsd:attribute type="xsd:string" name="name" use="required"/>
+                                                                        <xsd:attribute type="xsd:string" name="aliases" use="optional"/>
+                                                                        <xsd:attribute name="status" use="required">
+                                                                            <xsd:simpleType>
+                                                                                <xsd:restriction base="xsd:string">
+                                                                                    <xsd:enumeration value="ACTIVE"/>
+                                                                                    <xsd:enumeration value="INACTIVE"/>
+                                                                                    <xsd:enumeration value="ABOLISHED"/>
+                                                                                </xsd:restriction>
+                                                                            </xsd:simpleType>
+                                                                        </xsd:attribute>
+                                                                    </xsd:complexType>
+                                                                </xsd:element>
+                                                            </xsd:sequence>
+                                                        </xsd:complexType>
+                                                    </xsd:element>
+                                                </xsd:sequence>
+                                                <xsd:attribute type="xsd:string" name="name" use="required"/>
+                                                <xsd:attribute type="xsd:string" name="aliases" use="optional"/>
+                                                <xsd:attribute name="status" use="required">
+                                                    <xsd:simpleType>
+                                                        <xsd:restriction base="xsd:string">
+                                                            <xsd:enumeration value="ACTIVE"/>
+                                                            <xsd:enumeration value="INACTIVE"/>
+                                                            <xsd:enumeration value="ABOLISHED"/>
+                                                        </xsd:restriction>
+                                                    </xsd:simpleType>
+                                                </xsd:attribute>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="monthLongHoliday" maxOccurs="unbounded" minOccurs="0">
+                                            <xsd:complexType>
+                                                <xsd:sequence>
+                                                    <xsd:element name="type">
+                                                        <xsd:simpleType>
+                                                            <xsd:restriction base="xsd:string">
+                                                                <xsd:enumeration value="FEDERAL"/>
+                                                                <xsd:enumeration value="TRADITIONAL"/>
+                                                                <xsd:enumeration value="RELIGIOUS"/>
+                                                            </xsd:restriction>
+                                                        </xsd:simpleType>
+                                                    </xsd:element>
+                                                    <xsd:element name="month">
+                                                        <xsd:simpleType>
+                                                            <xsd:restriction base="xsd:string">
+                                                                <xsd:enumeration value="JANUARY"/>
+                                                                <xsd:enumeration value="FEBRUARY"/>
+                                                                <xsd:enumeration value="MARCH"/>
+                                                                <xsd:enumeration value="APRIL"/>
+                                                                <xsd:enumeration value="MAY"/>
+                                                                <xsd:enumeration value="JUNE"/>
+                                                                <xsd:enumeration value="JULY"/>
+                                                                <xsd:enumeration value="AUGUST"/>
+                                                                <xsd:enumeration value="SEPTEMBER"/>
+                                                                <xsd:enumeration value="OCTOBER"/>
+                                                                <xsd:enumeration value="NOVEMBER"/>
+                                                                <xsd:enumeration value="DECEMBER"/>
+                                                            </xsd:restriction>
+                                                        </xsd:simpleType>
+                                                    </xsd:element>
+                                                    <xsd:element name="beginYear" minOccurs="0" maxOccurs="1"/>
+                                                    <xsd:element name="endYear" minOccurs="0" maxOccurs="1"/>
+                                                    <xsd:element type="xsd:string" name="significance"/>
+                                                    <xsd:element type="xsd:string" name="comment"/>
+                                                    <xsd:element name="preHolidays" minOccurs="0" maxOccurs="1">
+                                                        <xsd:complexType>
+                                                            <xsd:sequence>
+                                                                <xsd:element name="preHoliday" minOccurs="1" maxOccurs="unbounded">
+                                                                    <xsd:complexType>
+                                                                        <xsd:sequence>
+                                                                            <xsd:element name="type">
+                                                                                <xsd:simpleType>
+                                                                                    <xsd:restriction base="xsd:string">
+                                                                                        <xsd:enumeration value="FEDERAL"/>
+                                                                                        <xsd:enumeration value="TRADITIONAL"/>
+                                                                                        <xsd:enumeration value="RELIGIOUS"/>
+                                                                                    </xsd:restriction>
+                                                                                </xsd:simpleType>
+                                                                            </xsd:element>
+                                                                            <xsd:element type="xsd:byte" name="start"/>
+                                                                            <xsd:element type="xsd:byte" name="numDays"/>
+                                                                            <xsd:element name="beginYear" minOccurs="0" maxOccurs="1"/>
+                                                                            <xsd:element name="endYear" minOccurs="0" maxOccurs="1"/>
+                                                                            <xsd:element type="xsd:string" name="significance"/>
+                                                                            <xsd:element type="xsd:string" name="comment"/>
+                                                                        </xsd:sequence>
+                                                                        <xsd:attribute type="xsd:string" name="name" use="required"/>
+                                                                        <xsd:attribute type="xsd:string" name="aliases" use="optional"/>
+                                                                        <xsd:attribute name="status" use="required">
+                                                                            <xsd:simpleType>
+                                                                                <xsd:restriction base="xsd:string">
+                                                                                    <xsd:enumeration value="ACTIVE"/>
+                                                                                    <xsd:enumeration value="INACTIVE"/>
+                                                                                    <xsd:enumeration value="ABOLISHED"/>
+                                                                                </xsd:restriction>
+                                                                            </xsd:simpleType>
+                                                                        </xsd:attribute>
+                                                                    </xsd:complexType>
+                                                                </xsd:element>
+                                                            </xsd:sequence>
+                                                        </xsd:complexType>
+                                                    </xsd:element>
+                                                    <xsd:element name="postHolidays" minOccurs="0">
+                                                        <xsd:complexType>
+                                                            <xsd:sequence>
+                                                                <xsd:element name="postHoliday">
+                                                                    <xsd:complexType>
+                                                                        <xsd:sequence>
+                                                                            <xsd:element name="type">
+                                                                                <xsd:simpleType>
+                                                                                    <xsd:restriction base="xsd:string">
+                                                                                        <xsd:enumeration value="FEDERAL"/>
+                                                                                        <xsd:enumeration value="TRADITIONAL"/>
+                                                                                        <xsd:enumeration value="RELIGIOUS"/>
+                                                                                    </xsd:restriction>
+                                                                                </xsd:simpleType>
+                                                                            </xsd:element>
+                                                                            <xsd:element type="xsd:byte" name="start"/>
+                                                                            <xsd:element type="xsd:byte" name="numDays"/>
+                                                                            <xsd:element name="beginYear" minOccurs="0" maxOccurs="1"/>
+                                                                            <xsd:element name="endYear" minOccurs="0" maxOccurs="1"/>
+                                                                            <xsd:element type="xsd:string" name="significance"/>
+                                                                            <xsd:element type="xsd:string" name="comment"/>
+                                                                        </xsd:sequence>
+                                                                        <xsd:attribute type="xsd:string" name="name" use="required"/>
+                                                                        <xsd:attribute type="xsd:string" name="aliases" use="optional"/>
+                                                                        <xsd:attribute name="status" use="required">
+                                                                            <xsd:simpleType>
+                                                                                <xsd:restriction base="xsd:string">
+                                                                                    <xsd:enumeration value="ACTIVE"/>
+                                                                                    <xsd:enumeration value="INACTIVE"/>
+                                                                                    <xsd:enumeration value="ABOLISHED"/>
+                                                                                </xsd:restriction>
+                                                                            </xsd:simpleType>
+                                                                        </xsd:attribute>
+                                                                    </xsd:complexType>
+                                                                </xsd:element>
+                                                            </xsd:sequence>
+                                                        </xsd:complexType>
+                                                    </xsd:element>
+                                                </xsd:sequence>
+                                                <xsd:attribute type="xsd:string" name="name" use="required"/>
+                                                <xsd:attribute type="xsd:string" name="aliases" use="optional"/>
+                                                <xsd:attribute name="status" use="required">
+                                                    <xsd:simpleType>
+                                                        <xsd:restriction base="xsd:string">
+                                                            <xsd:enumeration value="ACTIVE"/>
+                                                            <xsd:enumeration value="INACTIVE"/>
+                                                            <xsd:enumeration value="ABOLISHED"/>
+                                                        </xsd:restriction>
+                                                    </xsd:simpleType>
+                                                </xsd:attribute>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="derivedHoliday" maxOccurs="unbounded" minOccurs="0">
+                                            <xsd:complexType>
+                                                <xsd:sequence>
+                                                    <xsd:element name="type">
+                                                        <xsd:simpleType>
+                                                            <xsd:restriction base="xsd:string">
+                                                                <xsd:enumeration value="FEDERAL"/>
+                                                                <xsd:enumeration value="TRADITIONAL"/>
+                                                                <xsd:enumeration value="RELIGIOUS"/>
+                                                            </xsd:restriction>
+                                                        </xsd:simpleType>
+                                                    </xsd:element>
+                                                    <xsd:element type="xsd:string" name="method"/>
+                                                    <xsd:element name="parameters">
+                                                        <xsd:complexType>
+                                                            <xsd:sequence>
+                                                                <xsd:element name="parameter">
+                                                                    <xsd:complexType>
+                                                                        <xsd:simpleContent>
+                                                                            <xsd:extension base="xsd:string">
+                                                                                <xsd:attribute type="xsd:string" name="type"/>
+                                                                                <xsd:attribute type="xsd:byte" name="length"/>
+                                                                            </xsd:extension>
+                                                                        </xsd:simpleContent>
+                                                                    </xsd:complexType>
+                                                                </xsd:element>
+                                                            </xsd:sequence>
+                                                        </xsd:complexType>
+                                                    </xsd:element>
+                                                    <xsd:element name="beginYear" minOccurs="0" maxOccurs="1"/>
+                                                    <xsd:element name="endYear" minOccurs="0" maxOccurs="1"/>
+                                                    <xsd:element type="xsd:string" name="significance"/>
+                                                    <xsd:element type="xsd:string" name="comment"/>
+                                                    <xsd:element name="preHolidays">
+                                                        <xsd:complexType>
+                                                            <xsd:sequence>
+                                                                <xsd:element name="derivedHoliday" maxOccurs="unbounded" minOccurs="0">
+                                                                    <xsd:complexType>
+                                                                        <xsd:sequence>
+                                                                            <xsd:element type="xsd:string" name="type"/>
+                                                                            <xsd:element name="method">
+                                                                                <xsd:complexType>
+                                                                                    <xsd:simpleContent>
+                                                                                        <xsd:extension base="xsd:string">
+                                                                                            <xsd:attribute type="xsd:string" name="precondition" use="optional"/>
+                                                                                        </xsd:extension>
+                                                                                    </xsd:simpleContent>
+                                                                                </xsd:complexType>
+                                                                            </xsd:element>
+                                                                            <xsd:element name="parameters">
+                                                                                <xsd:complexType>
+                                                                                    <xsd:sequence>
+                                                                                        <xsd:element name="parameter">
+                                                                                            <xsd:complexType>
+                                                                                                <xsd:simpleContent>
+                                                                                                    <xsd:extension base="xsd:string">
+                                                                                                        <xsd:attribute type="xsd:string" name="type" use="optional"/>
+                                                                                                    </xsd:extension>
+                                                                                                </xsd:simpleContent>
+                                                                                            </xsd:complexType>
+                                                                                        </xsd:element>
+                                                                                    </xsd:sequence>
+                                                                                </xsd:complexType>
+                                                                            </xsd:element>
+                                                                            <xsd:element name="beginYear" minOccurs="0" maxOccurs="1"/>
+                                                                            <xsd:element name="endYear" minOccurs="0" maxOccurs="1"/>
+                                                                            <xsd:element type="xsd:string" name="significance"/>
+                                                                            <xsd:element type="xsd:string" name="comment"/>
+                                                                        </xsd:sequence>
+                                                                        <xsd:attribute type="xsd:string" name="name" use="required"/>
+                                                                        <xsd:attribute type="xsd:string" name="aliases" use="optional"/>
+                                                                        <xsd:attribute name="status" use="required">
+                                                                            <xsd:simpleType>
+                                                                                <xsd:restriction base="xsd:string">
+                                                                                    <xsd:enumeration value="ACTIVE"/>
+                                                                                    <xsd:enumeration value="INACTIVE"/>
+                                                                                    <xsd:enumeration value="ABOLISHED"/>
+                                                                                </xsd:restriction>
+                                                                            </xsd:simpleType>
+                                                                        </xsd:attribute>
+                                                                    </xsd:complexType>
+                                                                </xsd:element>
+                                                            </xsd:sequence>
+                                                        </xsd:complexType>
+                                                    </xsd:element>
+                                                </xsd:sequence>
+                                                <xsd:attribute type="xsd:string" name="name" use="required"/>
+                                                <xsd:attribute type="xsd:string" name="aliases" use="optional"/>
+                                                <xsd:attribute name="status" use="required">
+                                                    <xsd:simpleType>
+                                                        <xsd:restriction base="xsd:string">
+                                                            <xsd:enumeration value="ACTIVE"/>
+                                                            <xsd:enumeration value="INACTIVE"/>
+                                                            <xsd:enumeration value="ABOLISHED"/>
+                                                        </xsd:restriction>
+                                                    </xsd:simpleType>
+                                                </xsd:attribute>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>                            
+                        </xsd:sequence>
+                        <xsd:attribute type="xsd:string" name="name"/>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+            <xsd:attribute type="xsd:string" name="targetNamespace"/>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
