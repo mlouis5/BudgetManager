@@ -23,7 +23,7 @@ ALTER TABLE budget.address
 
   CREATE TABLE budget."user"
 (
-    user_id char(36) unique not null primary key,		--generated from email address, fname, lname
+    user_id char(32) unique not null primary key,		--generated from email address, fname, lname
     user_fname varchar(128) not null,
     user_lname varchar(128) not null,
     user_phone varchar(10),
@@ -40,8 +40,8 @@ ALTER TABLE budget."user"
 
 CREATE TABLE budget.bill
 (
-    bill_id char(36) unique not null primary key,	--generated using bill_owner, bill_source, bill_due_date
-    bill_owner char(36) not null references budget."user"(user_id) on update cascade on delete cascade,
+    bill_id char(32) unique not null primary key,	--generated using bill_owner, bill_source, bill_due_date
+    bill_owner char(32) not null references budget."user"(user_id) on update cascade on delete cascade,
     bill_name varchar(128),
     bill_source varchar(128) not null,
     bill_type varchar(128) default 'OTHER',
@@ -66,9 +66,9 @@ ALTER TABLE budget.bill
 
 CREATE TABLE budget.payment
 (
-    payment_id char(36) not null unique primary key, --generated from user_id, bill_id, and filing date
-    payment_bill_id char(36) not null references budget.bill(bill_id) on update no action on delete no action,
-    payment_user_id char(36) not null references budget."user"(user_id) on update cascade on delete cascade,
+    payment_id char(32) not null unique primary key, --generated from user_id, bill_id, and filing date
+    payment_bill_id char(32) not null references budget.bill(bill_id) on update no action on delete no action,
+    payment_user_id char(32) not null references budget."user"(user_id) on update cascade on delete cascade,
     payment_due_date date not null,
     payment_filing_date date not null,
     payment_last_notification_date date,
@@ -83,8 +83,8 @@ ALTER TABLE budget.payment
 
 CREATE TABLE budget.paycheck
 (
-    paycheck_id char(36) not null unique primary key,	--generated using paycheck_source, gross_amount, net_amount, paycheck_owner
-    paycheck_owner char(36) not null references budget."user"(user_id),
+    paycheck_id char(32) not null unique primary key,	--generated using paycheck_source, gross_amount, net_amount, paycheck_owner
+    paycheck_owner char(32) not null references budget."user"(user_id),
     paycheck_source varchar(256) not null,
     paycheck_occurrence integer not null default 1,		--bi-weekly
     paycheck_gross_amount double precision not null,
@@ -111,8 +111,8 @@ ALTER TABLE budget.paycheck
 CREATE TABLE budget.income
 (
     income_id serial not null unique primary key,
-    income_user_id char(36) not null references budget."user"(user_id)  on update cascade on delete cascade,
-    income_paycheck_id char(36) not null references budget.paycheck(paycheck_id)  on update no action on delete no action,
+    income_user_id char(32) not null references budget."user"(user_id)  on update cascade on delete cascade,
+    income_paycheck_id char(32) not null references budget.paycheck(paycheck_id)  on update no action on delete no action,
     income_date date not null
 ) 
 WITH (

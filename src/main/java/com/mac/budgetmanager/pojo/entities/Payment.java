@@ -5,8 +5,16 @@
  */
 package com.mac.budgetmanager.pojo.entities;
 
+import com.google.common.base.Charsets;
+import com.google.common.hash.Funnel;
+import com.google.common.hash.HashCode;
+import com.google.common.hash.HashFunction;
+import com.google.common.hash.Hashing;
+import com.google.common.hash.PrimitiveSink;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -73,25 +81,16 @@ public class Payment implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private User paymentUserId;
 
-    public Payment() {
-    }
-
-    public Payment(String paymentId) {
-        this.paymentId = paymentId;
-    }
-
-    public Payment(String paymentId, Date paymentDueDate, Date paymentFilingDate) {
-        this.paymentId = paymentId;
-        this.paymentDueDate = paymentDueDate;
-        this.paymentFilingDate = paymentFilingDate;
-    }
+    public Payment() {}
 
     public String getPaymentId() {
         return paymentId;
     }
 
     public void setPaymentId(String paymentId) {
-        this.paymentId = paymentId;
+        if(Objects.isNull(this.paymentId) || this.paymentId.isEmpty()){
+            this.paymentId = paymentId;
+        }
     }
 
     public Date getPaymentDueDate() {
@@ -144,9 +143,9 @@ public class Payment implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (paymentId != null ? paymentId.hashCode() : 0);
-        return hash;
+        HashFunction hf = Hashing.md5();
+        HashCode hc = hf.newHasher().putString(paymentId, Charsets.UTF_8).hash();
+        return hc.asInt();
     }
 
     @Override
@@ -156,10 +155,7 @@ public class Payment implements Serializable {
             return false;
         }
         Payment other = (Payment) object;
-        if ((this.paymentId == null && other.paymentId != null) || (this.paymentId != null && !this.paymentId.equals(other.paymentId))) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.paymentId, other.paymentId);
     }
 
     @Override
