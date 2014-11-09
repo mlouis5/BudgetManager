@@ -7,10 +7,10 @@ package com.mac.budgetmanager.pojo.entities;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,9 +30,9 @@ import org.springframework.stereotype.Component;
  *
  * @author Mac
  */
+@Entity
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-@Entity
 @Table(name = "address", catalog = "finance", schema = "budget")
 @XmlRootElement
 @NamedQueries({
@@ -65,17 +65,17 @@ public class Address implements Serializable {
     private String addressCity;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 2, max = 2)
+    @Size(min = 1, max = 2)
     @Column(name = "address_state", nullable = false, length = 2)
     private String addressState;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 5, max = 5)
+    @Size(min = 1, max = 5)
     @Column(name = "address_zipcode", nullable = false, length = 5)
     private String addressZipcode;
-    @OneToMany(mappedBy = "billMailAddress")
+    @OneToMany(mappedBy = "billMailAddress", fetch = FetchType.EAGER)
     private List<Bill> billList;
-    @OneToMany(mappedBy = "userAddress")
+    @OneToMany(mappedBy = "userAddress", fetch = FetchType.EAGER)
     private List<User> userList;
 
     public Address() {
@@ -173,12 +173,15 @@ public class Address implements Serializable {
             return false;
         }
         Address other = (Address) object;
-        return Objects.equals(addressId, other.addressId);
+        if ((this.addressId == null && other.addressId != null) || (this.addressId != null && !this.addressId.equals(other.addressId))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "com.mac.entities.Address[ addressId=" + addressId + " ]";
+        return "com.mac.budgetmanager.pojo.entities.Address[ addressId=" + addressId + " ]";
     }
     
 }

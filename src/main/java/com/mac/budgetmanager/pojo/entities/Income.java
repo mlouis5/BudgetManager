@@ -7,10 +7,10 @@ package com.mac.budgetmanager.pojo.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -53,10 +53,10 @@ public class Income implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date incomeDate;
     @JoinColumn(name = "income_paycheck_id", referencedColumnName = "paycheck_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Paycheck incomePaycheckId;
     @JoinColumn(name = "income_user_id", referencedColumnName = "user_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private User incomeUserId;
 
     public Income() {
@@ -117,12 +117,15 @@ public class Income implements Serializable {
             return false;
         }
         Income other = (Income) object;
-        return Objects.equals(incomeId, other.incomeId);
+        if ((this.incomeId == null && other.incomeId != null) || (this.incomeId != null && !this.incomeId.equals(other.incomeId))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "com.mac.entities.Income[ incomeId=" + incomeId + " ]";
+        return "com.mac.budgetmanager.pojo.entities.Income[ incomeId=" + incomeId + " ]";
     }
     
 }

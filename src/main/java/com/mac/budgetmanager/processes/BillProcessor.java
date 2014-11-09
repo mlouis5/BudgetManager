@@ -8,10 +8,11 @@ package com.mac.budgetmanager.processes;
 import com.mac.budgetmanager.pojo.entities.Bill;
 import com.mac.budgetmanager.pojo.entities.Payment;
 import com.mac.budgetmanager.pojo.entities.dao.impl.BillRepository;
-import com.mac.budgettracker.utilities.Utility;
+import com.mac.budgetmanager.pojo.entities.dao.impl.PaymentRepository;
 import com.mac.common.utilities.dates.DateManipulator;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,6 +24,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 /**
@@ -40,7 +42,7 @@ public class BillProcessor {
     private ApplicationContext ctx;
 
     //@Scheduled(cron = "0 0 6,12,16 * * *")
-    @Scheduled(fixedDelay=10000)
+    @Scheduled(fixedDelay = 10000)
     public void processBills() {
         BillRepository billDAO = ctx.getBean(BillRepository.class);
         List<Bill> allBills = billDAO.findAll();
@@ -53,14 +55,17 @@ public class BillProcessor {
                 System.out.println(bill.getBillName());
                 System.out.println(bill.getBillSource());
                 if (isBillComingDue(bill)) {
-                    Payment payment = fileNewPayment(bill);
-                    if (Objects.nonNull(payment.getPaymentId())
-                            && Objects.nonNull(payment.getPaymentId()) && !payment.getPaymentId().isEmpty()) {
-                        paymentsToFile.add(payment);
-                        billsToNotifyAbout.put(payment, bill);
-                        System.out.println("filed payment for: " + bill);
-                        System.out.println("filed payment for: " + payment);
-                        System.out.println("filed payment for: " + payment.getPaymentDueDate());
+                    if (!isPaymentFiled(bill)) {
+                        Payment payment = fileNewPayment(bill);
+                        if (Objects.nonNull(payment.getPaymentId())
+                                && Objects.nonNull(payment.getPaymentId()) && !payment.getPaymentId().isEmpty()) {
+                            paymentsToFile.add(payment);
+                            billsToNotifyAbout.put(payment, bill);
+                            System.out.println("filed payment for: " + bill);
+                            System.out.println("filed payment for: " + payment);
+                            System.out.println("filed payment for: " + payment.getPaymentDueDate());
+                            bill.getPaymentList().add(payment);
+                        }
                     }
                 }
                 return bill;
@@ -73,6 +78,11 @@ public class BillProcessor {
                             });
                 }
             });
+            PaymentFiler filer = ctx.getBean(PaymentFiler.class);
+            PaymentRepository pr = ctx.getBean(PaymentRepository.class);
+            filer.setup(pr, paymentsToFile);
+            ThreadPoolTaskExecutor executor = ctx.getBean(ThreadPoolTaskExecutor.class);
+            executor.execute(filer);
         }
     }
 
@@ -99,15 +109,16 @@ public class BillProcessor {
         if (Objects.nonNull(dueDate)) {
             Date fileDate = ctx.getBean(Date.class);
 
-            UUID paymentId = Utility.generateUUIDFrom(bill.getBillId(),
-                    bill.getBillOwner().getUserId(),
-                    String.valueOf(Instant.now().toEpochMilli()),
-                    String.valueOf(dueDate.toEpochDay()));
+            UUID paymentId = UUID.randomUUID();
             singlePayment.setPaymentId(paymentId.toString());
             singlePayment.setPaymentBillId(bill);
             singlePayment.setPaymentUserId(bill.getBillOwner());
             singlePayment.setPaymentFilingDate(fileDate);
-            singlePayment.setPaymentDueDate(new Date(dueDate.toEpochDay()));
+
+            Instant instant = dueDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+            Date due = Date.from(instant);
+
+            singlePayment.setPaymentDueDate(due);
         }
         return singlePayment;
     }
@@ -121,6 +132,20 @@ public class BillProcessor {
         LocalDate dueDate = DateManipulator.formMostAccurateFromDay(bill.getBillDueDate());
         int daysTill = DateManipulator.daysUntilDate(dueDate);
         return daysTill <= COMING_DUE_TIMEFRAME;
+    }
+
+    private boolean isPaymentFiled(Bill bill) {
+        LocalDate dueDate = DateManipulator.formMostAccurateFromDay(bill.getBillDueDate());
+        List<Payment> payments = bill.getPaymentList();
+
+        System.out.println(payments);
+        if (payments.stream().map((pmt) -> pmt.getPaymentFilingDate()).map((fileDate) -> DateManipulator.toLocalDate(fileDate)).filter((localFileDate) -> (Objects.nonNull(localFileDate))).map((localFileDate) -> localFileDate.until(dueDate, ChronoUnit.DAYS)).map((daysTill) -> {
+            System.out.println("DAYS TILL: " + daysTill);
+            return daysTill;
+        }).anyMatch((daysTill) -> (daysTill >= 0 && daysTill <= COMING_DUE_TIMEFRAME))) {
+            return true;
+        }
+        return false;
     }
 
     private List<Payment> getPendingPayments(Bill bill) {
@@ -137,4 +162,5 @@ public class BillProcessor {
         }
         return pendingPmts;
     }
+
 }

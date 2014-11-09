@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.budgettracker.notifications;
+package com.mac.budgetmanager.pojo;
 
-import com.mac.budgettracker.newpackage.enums.ContactType;
+import com.mac.budgetmanager.enums.ContactType;
+
 
 /**
  *

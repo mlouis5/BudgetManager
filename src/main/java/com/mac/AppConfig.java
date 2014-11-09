@@ -33,7 +33,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableAutoConfiguration
 @EnableTransactionManagement
 @ComponentScan({"com.mac", "com.mac.budgetmanager.pojo.entities",
-    "com.mac.budgetmanager.processes", "com.mac.budgetmanager.pojo.entities.dao.impl"})
+    "com.mac.budgetmanager.processes", "com.mac.budgetmanager.pojo.entities.dao.impl",
+    "com.mac.budgetmanager.pojo.entities.dao"})
 public class AppConfig {
     
     @Bean
@@ -46,7 +47,8 @@ public class AppConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {        
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[]{"com.mac.butgettracker.entities"});
+        em.setPersistenceUnitName("com.mac_BudgetManager_jar_1.0PU");
+        em.setPackagesToScan(new String[]{"com.mac.butgetmanager.pojo.entities"});
         JpaVendorAdapter vendorAdapter = new EclipseLinkJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         em.setJpaProperties(additionalProperties());

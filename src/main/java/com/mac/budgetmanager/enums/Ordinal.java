@@ -3,10 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.budgettracker.newpackage.enums;
-
-import com.google.common.base.Converter;
-import com.google.common.base.Enums;
+package com.mac.budgetmanager.enums;
 
 /**
  *

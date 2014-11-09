@@ -7,11 +7,11 @@ package com.mac.budgetmanager.pojo.entities;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -106,10 +106,10 @@ public class Paycheck implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "paycheck_source_observed_holidays", length = 2147483647)
     private String paycheckSourceObservedHolidays;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "incomePaycheckId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "incomePaycheckId", fetch = FetchType.EAGER)
     private List<Income> incomeList;
     @JoinColumn(name = "paycheck_owner", referencedColumnName = "user_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private User paycheckOwner;
 
     public Paycheck() {
@@ -286,12 +286,15 @@ public class Paycheck implements Serializable {
             return false;
         }
         Paycheck other = (Paycheck) object;
-        return Objects.equals(paycheckId, other.paycheckId);
+        if ((this.paycheckId == null && other.paycheckId != null) || (this.paycheckId != null && !this.paycheckId.equals(other.paycheckId))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "com.mac.entities.Paycheck[ paycheckId=" + paycheckId + " ]";
+        return "com.mac.budgetmanager.pojo.entities.Paycheck[ paycheckId=" + paycheckId + " ]";
     }
     
 }

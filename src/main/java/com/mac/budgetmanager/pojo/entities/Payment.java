@@ -5,15 +5,12 @@
  */
 package com.mac.budgetmanager.pojo.entities;
 
-import com.google.common.base.Preconditions;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Date;
-import java.util.Objects;
-import java.util.UUID;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -43,11 +40,9 @@ import org.springframework.stereotype.Component;
     @NamedQuery(name = "Payment.findByPaymentId", query = "SELECT p FROM Payment p WHERE p.paymentId = :paymentId"),
     @NamedQuery(name = "Payment.findByPaymentDueDate", query = "SELECT p FROM Payment p WHERE p.paymentDueDate = :paymentDueDate"),
     @NamedQuery(name = "Payment.findByPaymentFilingDate", query = "SELECT p FROM Payment p WHERE p.paymentFilingDate = :paymentFilingDate"),
+    @NamedQuery(name = "Payment.findByPaymentLastNotificationDate", query = "SELECT p FROM Payment p WHERE p.paymentLastNotificationDate = :paymentLastNotificationDate"),
     @NamedQuery(name = "Payment.findByPaymentPaidDate", query = "SELECT p FROM Payment p WHERE p.paymentPaidDate = :paymentPaidDate")})
 public class Payment implements Serializable {
-    @Column(name = "payment_last_notification_date")
-    @Temporal(TemporalType.DATE)
-    private Date paymentLastNotificationDate;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -65,14 +60,17 @@ public class Payment implements Serializable {
     @Column(name = "payment_filing_date", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date paymentFilingDate;
+    @Column(name = "payment_last_notification_date")
+    @Temporal(TemporalType.DATE)
+    private Date paymentLastNotificationDate;
     @Column(name = "payment_paid_date")
     @Temporal(TemporalType.DATE)
     private Date paymentPaidDate;
     @JoinColumn(name = "payment_bill_id", referencedColumnName = "bill_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Bill paymentBillId;
     @JoinColumn(name = "payment_user_id", referencedColumnName = "user_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private User paymentUserId;
 
     public Payment() {
@@ -81,18 +79,11 @@ public class Payment implements Serializable {
     public Payment(String paymentId) {
         this.paymentId = paymentId;
     }
-    
-    public Payment(User user, Bill bill, Date billDueDate, Date fileDate) {
-        Preconditions.checkNotNull(user, user);
-        Preconditions.checkNotNull(bill, bill);
-        Preconditions.checkNotNull(billDueDate, billDueDate);
-        Preconditions.checkNotNull(fileDate, fileDate);
-        StringBuilder sb = new StringBuilder(user.getUserId());
-        sb.append(bill.getBillId());
-        sb.append(fileDate.getTime());
-        this.paymentId = String.valueOf(UUID.fromString(sb.toString()));
-        this.paymentDueDate = billDueDate;
-        this.paymentFilingDate = fileDate;
+
+    public Payment(String paymentId, Date paymentDueDate, Date paymentFilingDate) {
+        this.paymentId = paymentId;
+        this.paymentDueDate = paymentDueDate;
+        this.paymentFilingDate = paymentFilingDate;
     }
 
     public String getPaymentId() {
@@ -117,6 +108,14 @@ public class Payment implements Serializable {
 
     public void setPaymentFilingDate(Date paymentFilingDate) {
         this.paymentFilingDate = paymentFilingDate;
+    }
+
+    public Date getPaymentLastNotificationDate() {
+        return paymentLastNotificationDate;
+    }
+
+    public void setPaymentLastNotificationDate(Date paymentLastNotificationDate) {
+        this.paymentLastNotificationDate = paymentLastNotificationDate;
     }
 
     public Date getPaymentPaidDate() {
@@ -157,20 +156,15 @@ public class Payment implements Serializable {
             return false;
         }
         Payment other = (Payment) object;
-        return Objects.equals(paymentId, other.paymentId);
+        if ((this.paymentId == null && other.paymentId != null) || (this.paymentId != null && !this.paymentId.equals(other.paymentId))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "com.mac.entities.Payment[ paymentId=" + paymentId + " ]";
-    }
-
-    public Date getPaymentLastNotificationDate() {
-        return paymentLastNotificationDate;
-    }
-
-    public void setPaymentLastNotificationDate(Date paymentLastNotificationDate) {
-        this.paymentLastNotificationDate = paymentLastNotificationDate;
+        return "com.mac.budgetmanager.pojo.entities.Payment[ paymentId=" + paymentId + " ]";
     }
     
 }

@@ -5,15 +5,13 @@
  */
 package com.mac.budgetmanager.pojo.entities;
 
-import com.google.common.base.Preconditions;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -100,33 +98,33 @@ public class Bill implements Serializable {
     @Column(name = "bill_is_satisfied")
     private Boolean billIsSatisfied;
     @JoinColumn(name = "bill_mail_address", referencedColumnName = "address_id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Address billMailAddress;
     @JoinColumn(name = "bill_owner", referencedColumnName = "user_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private User billOwner;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "paymentBillId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "paymentBillId", fetch = FetchType.EAGER)
     private List<Payment> paymentList;
 
     public Bill() {
     }
-    
-    public Bill(User billOwner, String billSource, int billDueDate){
-        Preconditions.checkNotNull(billOwner, billOwner);
-        Preconditions.checkNotNull(billSource, billSource);
-        Preconditions.checkNotNull(billDueDate, billDueDate);
-        this.billOwner = billOwner;
+
+    public Bill(String billId) {
+        this.billId = billId;
+    }
+
+    public Bill(String billId, String billSource, int billDueDate) {
+        this.billId = billId;
         this.billSource = billSource;
         this.billDueDate = billDueDate;
-        StringBuilder sb = new StringBuilder(billOwner.getUserEmail());
-        sb.append(billSource);
-        sb.append(billDueDate);
-        sb.trimToSize();
-        this.billId = String.valueOf(UUID.fromString(sb.toString()));
     }
 
     public String getBillId() {
         return billId;
+    }
+
+    public void setBillId(String billId) {
+        this.billId = billId;
     }
 
     public String getBillName() {
@@ -272,12 +270,15 @@ public class Bill implements Serializable {
             return false;
         }
         Bill other = (Bill) object;
-        return Objects.equals(billId, other.billId);
+        if ((this.billId == null && other.billId != null) || (this.billId != null && !this.billId.equals(other.billId))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "com.mac.entities.Bill[ billId=" + billId + " ]";
+        return "com.mac.budgetmanager.pojo.entities.Bill[ billId=" + billId + " ]";
     }
     
 }

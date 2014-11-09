@@ -5,20 +5,24 @@
  */
 package com.mac.common.utilities.dates;
 
-import com.mac.budgettracker.newpackage.enums.Ordinal;
-import com.mac.budgettracker.newpackage.enums.Week;
+import com.mac.budgetmanager.enums.Ordinal;
+import com.mac.budgetmanager.enums.Week;
+import com.mac.budgetmanager.pojo.Holiday;
 import com.mac.budgetmanager.pojo.Year;
-import com.mac.budgettracker.utilities.Utility;
-import com.mac.budgettracker.utilities.xml.Holiday;
 import com.mac.budgetmanager.pojo.impl.FixedHoliday;
 import com.mac.budgetmanager.pojo.impl.FloatingHoliday;
 import com.mac.budgetmanager.pojo.impl.SubHoliday;
+import com.mac.common.utilities.Utility;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.DayOfWeek;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.ZoneId;
 import java.time.temporal.ChronoField;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -145,6 +149,14 @@ public class DateManipulator {
 
     public static LocalDate of(Month month, Week week, DayOfWeek day) {
         return of(new Year(LocalDate.now().getYear()), month, week, day);
+    }
+    
+    public static LocalDate toLocalDate(Date date){
+        if(Objects.nonNull(date)){
+            Instant instant = Instant.ofEpochMilli(date.getTime());
+            return LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
+        }
+        return null;
     }
 
     public static LocalDate of(Year year, Month month, Week week, DayOfWeek day) {

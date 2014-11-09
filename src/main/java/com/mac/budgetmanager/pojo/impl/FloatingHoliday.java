@@ -5,12 +5,12 @@
  */
 package com.mac.budgetmanager.pojo.impl;
 
-import com.mac.budgettracker.newpackage.enums.Week;
+import com.mac.budgetmanager.enums.Status;
+import com.mac.budgetmanager.enums.Type;
+import com.mac.budgetmanager.enums.Week;
+import com.mac.budgetmanager.pojo.Holiday;
+import com.mac.common.utilities.Utility;
 import com.mac.common.utilities.dates.DateManipulator;
-import com.mac.budgettracker.utilities.Utility;
-import com.mac.budgettracker.utilities.xml.Holiday;
-import com.mac.budgettracker.utilities.xml.enums.Status;
-import com.mac.budgettracker.utilities.xml.enums.Type;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;

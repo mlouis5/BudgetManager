@@ -5,6 +5,8 @@
  */
 package com.mac;
 
+import com.mac.budgetmanager.pojo.entities.dao.impl.BillRepository;
+import com.mac.budgetmanager.processes.PaymentFiler;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 /**
  *
@@ -38,5 +41,18 @@ public class BeanConfig {
     @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public Date date(){
         return new Date();
+    }
+    
+    @Bean
+    public ThreadPoolTaskExecutor threadPoolTaskExecutor(){
+        ThreadPoolTaskExecutor tpte = new ThreadPoolTaskExecutor();
+        tpte.setCorePoolSize(2);
+        tpte.setWaitForTasksToCompleteOnShutdown(true);
+        return tpte;
+    }
+    
+    @Bean
+    public PaymentFiler paymentFiler(){
+        return new PaymentFiler();
     }
 }

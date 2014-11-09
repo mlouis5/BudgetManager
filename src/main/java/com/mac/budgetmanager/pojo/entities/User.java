@@ -5,15 +5,13 @@
  */
 package com.mac.budgetmanager.pojo.entities;
 
-import com.google.common.base.Preconditions;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -47,7 +45,6 @@ import org.springframework.stereotype.Component;
     @NamedQuery(name = "User.findByUserEmail", query = "SELECT u FROM User u WHERE u.userEmail = :userEmail"),
     @NamedQuery(name = "User.findByUserPreferredContact", query = "SELECT u FROM User u WHERE u.userPreferredContact = :userPreferredContact")})
 public class User implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -76,64 +73,53 @@ public class User implements Serializable {
     @Size(max = 5)
     @Column(name = "user_preferred_contact", length = 5)
     private String userPreferredContact;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "incomeUserId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "incomeUserId", fetch = FetchType.EAGER)
     private List<Income> incomeList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "billOwner")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "billOwner", fetch = FetchType.EAGER)
     private List<Bill> billList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "paymentUserId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "paymentUserId", fetch = FetchType.EAGER)
     private List<Payment> paymentList;
     @JoinColumn(name = "user_address", referencedColumnName = "address_id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Address userAddress;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "paycheckOwner")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "paycheckOwner", fetch = FetchType.EAGER)
     private List<Paycheck> paycheckList;
 
     public User() {
     }
 
-    public User(String userFname, String userLname, String userEmail) {
-        Preconditions.checkNotNull(userFname, userFname);
-        Preconditions.checkNotNull(userLname, userLname);
-        Preconditions.checkNotNull(userEmail, userEmail);
+    public User(String userId) {
+        this.userId = userId;
+    }
+
+    public User(String userId, String userFname, String userLname, String userEmail) {
+        this.userId = userId;
         this.userFname = userFname;
         this.userLname = userLname;
         this.userEmail = userEmail;
-        StringBuilder sb = new StringBuilder(userFname);
-        sb.append(userLname);
-        sb.append(userEmail);
-        sb.trimToSize();
-        this.userId = String.valueOf(UUID.fromString(sb.toString()));
     }
 
     public String getUserId() {
-        Preconditions.checkNotNull(userFname, userFname);
-        Preconditions.checkNotNull(userLname, userLname);
-        Preconditions.checkNotNull(userEmail, userEmail);
-        StringBuilder sb = new StringBuilder(userFname);
-        sb.append(userLname);
-        sb.append(userEmail);
-        sb.trimToSize();
-        this.userId = String.valueOf(UUID.fromString(sb.toString()));
         return userId;
     }
 
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public String getUserFname() {
-        Preconditions.checkNotNull(userFname, userFname);
         return userFname;
     }
 
     public void setUserFname(String userFname) {
-        Preconditions.checkNotNull(userFname, userFname);
         this.userFname = userFname;
     }
 
     public String getUserLname() {
-        Preconditions.checkNotNull(userLname, userLname);
         return userLname;
     }
 
     public void setUserLname(String userLname) {
-        Preconditions.checkNotNull(userLname, userLname);
         this.userLname = userLname;
     }
 
@@ -146,12 +132,10 @@ public class User implements Serializable {
     }
 
     public String getUserEmail() {
-        Preconditions.checkNotNull(userEmail, userEmail);
         return userEmail;
     }
 
     public void setUserEmail(String userEmail) {
-        Preconditions.checkNotNull(userEmail, userEmail);
         this.userEmail = userEmail;
     }
 
@@ -216,19 +200,20 @@ public class User implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        Preconditions.checkNotNull(userId);                
+        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof User)) {
             return false;
         }
-        Preconditions.checkNotNull(object);
         User other = (User) object;
-        Preconditions.checkNotNull(other.userId);
-        return Objects.equals(userId, other.userId);
+        if ((this.userId == null && other.userId != null) || (this.userId != null && !this.userId.equals(other.userId))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "com.mac.entities.User[ userId=" + userId + " ]";
+        return "com.mac.budgetmanager.pojo.entities.User[ userId=" + userId + " ]";
     }
-
+    
 }

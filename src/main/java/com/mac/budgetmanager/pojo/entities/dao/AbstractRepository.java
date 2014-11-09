@@ -125,9 +125,9 @@ public abstract class AbstractRepository<T> {
             TypedQuery<T> query
                     = em.createNamedQuery(queryName, entityClass);
             if (Objects.nonNull(parameters) && !parameters.isEmpty()) {
-                for (Map.Entry entry : parameters.entrySet()) {
+                parameters.entrySet().stream().forEach((entry) -> {
                     query.setParameter((String) entry.getKey(), entry.getValue());
-                }
+                });
             }
             results = query.getResultList();
         }

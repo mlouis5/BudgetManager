@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.budgettracker.utilities.xml;
+package com.mac.budgetmanager.pojo;
 
-import com.mac.budgettracker.utilities.xml.enums.Status;
-import com.mac.budgettracker.utilities.xml.enums.Type;
+import com.mac.budgetmanager.enums.Status;
+import com.mac.budgetmanager.enums.Type;
 import java.io.Serializable;
 import java.time.temporal.Temporal;
 import java.util.List;
