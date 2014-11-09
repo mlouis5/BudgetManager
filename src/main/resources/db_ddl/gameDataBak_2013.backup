@@ -1,0 +1,54 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.2.8
+-- Dumped by pg_dump version 9.3.1
+-- Started on 2014-11-09 10:15:13
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+SET search_path = budget, pg_catalog;
+
+--
+-- TOC entry 1955 (class 0 OID 27093)
+-- Dependencies: 172
+-- Data for Name: bill; Type: TABLE DATA; Schema: budget; Owner: postgres
+--
+
+INSERT INTO bill (bill_id, bill_owner, bill_name, bill_source, bill_type, bill_due_date, bill_is_revolving, bill_num_payments, bill_late_fee_amount, bill_interest_rate, bill_grace_period, bill_website, bill_site_user_id, bill_site_pwd, bill_mail_address, bill_is_satisfied) VALUES ('13CCAB2B-8458-47A1-B14C-A16CA9D74F1E', 'C9E4758E-0251-4449-9600-F2C757C4CDCF', 'Car Payment', 'honda financial services', 'Auto Loan', 22, false, 8, 35, 1.99, 10, 'www.hondafinancialservices.com', 'macdersonlouis@gmail.com', 'Notorious1982', NULL, false);
+INSERT INTO bill (bill_id, bill_owner, bill_name, bill_source, bill_type, bill_due_date, bill_is_revolving, bill_num_payments, bill_late_fee_amount, bill_interest_rate, bill_grace_period, bill_website, bill_site_user_id, bill_site_pwd, bill_mail_address, bill_is_satisfied) VALUES ('3355C67A-34E7-4063-827B-5186D8389995', 'C9E4758E-0251-4449-9600-F2C757C4CDCF', 'Rent', 'DL', 'Rent', 22, false, 8, 0, 0, 5, NULL, NULL, NULL, NULL, false);
+INSERT INTO bill (bill_id, bill_owner, bill_name, bill_source, bill_type, bill_due_date, bill_is_revolving, bill_num_payments, bill_late_fee_amount, bill_interest_rate, bill_grace_period, bill_website, bill_site_user_id, bill_site_pwd, bill_mail_address, bill_is_satisfied) VALUES ('3355C67c-34E7-4064-827B-5186D8389995', 'C9E4758E-0251-4449-9600-F2C757C4CDCF', 'Rent', 'Joe', 'Rent', 21, false, 8, 0, 0, 5, NULL, NULL, NULL, NULL, false);
+
+
+--
+-- TOC entry 1956 (class 0 OID 27116)
+-- Dependencies: 173
+-- Data for Name: payment; Type: TABLE DATA; Schema: budget; Owner: postgres
+--
+
+INSERT INTO payment (payment_id, payment_bill_id, payment_user_id, payment_due_date, payment_filing_date, payment_last_notification_date, payment_paid_date) VALUES ('8ae2cc4d-91f5-4ba7-82f8-2e08bda9648a', '13CCAB2B-8458-47A1-B14C-A16CA9D74F1E', 'C9E4758E-0251-4449-9600-F2C757C4CDCF', '2014-11-12', '2014-11-09', NULL, NULL);
+INSERT INTO payment (payment_id, payment_bill_id, payment_user_id, payment_due_date, payment_filing_date, payment_last_notification_date, payment_paid_date) VALUES ('5d988131-de03-4796-8317-28a32f166f40', '3355C67A-34E7-4063-827B-5186D8389995', 'C9E4758E-0251-4449-9600-F2C757C4CDCF', '2014-11-12', '2014-11-09', NULL, NULL);
+INSERT INTO payment (payment_id, payment_bill_id, payment_user_id, payment_due_date, payment_filing_date, payment_last_notification_date, payment_paid_date) VALUES ('b112e284-7be2-49fc-974f-d616894a1234', '3355C67c-34E7-4064-827B-5186D8389995', 'C9E4758E-0251-4449-9600-F2C757C4CDCF', '2014-11-10', '2014-11-09', NULL, NULL);
+
+
+--
+-- TOC entry 1954 (class 0 OID 27079)
+-- Dependencies: 171
+-- Data for Name: user; Type: TABLE DATA; Schema: budget; Owner: postgres
+--
+
+INSERT INTO "user" (user_id, user_fname, user_lname, user_phone, user_email, user_preferred_contact, user_address) VALUES ('C9E4758E-0251-4449-9600-F2C757C4CDCF', 'MacDers', 'Louis', '6095094605', 'macdersonlouis@gmail.com', 'TEXT', NULL);
+
+
+-- Completed on 2014-11-09 10:15:13
+
+--
+-- PostgreSQL database dump complete
+--
+
