@@ -141,6 +141,12 @@
             <artifactId>h2</artifactId>
             <version>${h2.db.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.5</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     
     <build>

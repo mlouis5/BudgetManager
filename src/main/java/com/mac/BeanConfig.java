@@ -5,6 +5,7 @@
  */
 package com.mac;
 
+import com.mac.budgetmanager.pojo.entities.Payment;
 import com.mac.budgetmanager.pojo.entities.dao.impl.BillRepository;
 import com.mac.budgetmanager.processes.PaymentFiler;
 import java.time.Instant;
@@ -12,10 +13,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Properties;
+import java.util.function.Supplier;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 /**
@@ -54,5 +59,29 @@ public class BeanConfig {
     @Bean
     public PaymentFiler paymentFiler(){
         return new PaymentFiler();
+    }
+    
+    @Bean
+    public MailSender gmailMailSender(){
+        JavaMailSenderImpl ms = new JavaMailSenderImpl();
+        ms.setHost("smtp.gmail.com");
+        ms.setUsername("noreply.mybudget@gmail.com");
+        ms.setPassword("Notorious05261982**");
+        ms.setJavaMailProperties(gmailProps());
+        return ms;
+    }
+    
+    Properties gmailProps(){
+        Properties props = new Properties();
+        props.setProperty("mail.smtp.auth", "true");
+        props.setProperty("mail.smtp.starttls.enable", "true");
+        props.setProperty("mail.mime.charset", "UTF-8");
+        props.setProperty("mail.transport.protocol", "smtp");
+        return props;
+    }
+    
+    @Bean
+    public Supplier<Payment> paymentSupplier(){
+        return () -> new Payment();
     }
 }

@@ -6,13 +6,10 @@
 package com.mac.budgetmanager.pojo.entities;
 
 import com.google.common.base.Charsets;
-import com.google.common.hash.Funnel;
 import com.google.common.hash.HashCode;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
-import com.google.common.hash.PrimitiveSink;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Basic;

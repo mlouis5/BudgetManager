@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -160,14 +159,10 @@ public class BillProcessor {
 
     private boolean isPaymentFiled(Bill bill) {
         Payment aPmt = fileNewPayment(bill);
-
-//        LocalDate dueDate = DateManipulator.formMostAccurateFromDay(bill.getBillDueDate());
         List<Payment> payments = bill.getPaymentList();
         if (Objects.nonNull(payments) && !payments.isEmpty()) {
-            //boolean anyMatch = 
-
             if (payments.stream().filter((payment) -> (Objects.nonNull(payment)))
-                    .anyMatch((pmtCompare) -> (pmtCompare.hashCode() == aPmt.hashCode()))) {
+                    .anyMatch((pmtToCompare) -> (pmtToCompare.hashCode() == aPmt.hashCode()))) {
                 return true;
             }
         }

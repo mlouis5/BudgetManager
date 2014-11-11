@@ -1,0 +1,18 @@
+<html>
+    <h3>Payment reminder for $envelope.getBill().getBillOwner().getUserFname() $envelope.getBill().getBillOwner().getUserLname()</h3>
+
+    <section>The bill below has one or more payments due</section>
+    <section>Bill Id: $envelope.getBill().getBillId()</section>
+    <section>Bill Name: $envelope.getBill().getBillName()</section>
+    <section>Bill Source: $envelope.getBill().getBillSource()</section>
+    <section>Bill Amount: $envelope.getBill().getBillAmount()</section>
+    <section>
+        #foreach( $payment in $envelope.getPayments() )
+            <section>
+                <section>$payment.getPaymentBillId()</section>
+                <section>$payment.getPaymentDueDate()</section>
+                <section>$payment.getPaymentFilingDate()</section>
+            </section>
+        #end
+    <section>
+<html>

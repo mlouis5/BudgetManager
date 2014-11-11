@@ -48,6 +48,7 @@ CREATE TABLE budget.bill
     bill_due_date integer not null check(bill_due_date > 0 and bill_due_date < 32),
     bill_is_revolving boolean default false,
     bill_num_payments integer,
+    bill_amount double precision not null,
     bill_late_fee_amount double precision,
     bill_interest_rate double precision,
     bill_grace_period integer check(bill_grace_period <= 15),

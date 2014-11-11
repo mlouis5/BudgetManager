@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.util.Date;
 import java.util.HashMap;
@@ -68,6 +69,10 @@ public class DateManipulator {
         } catch (IOException | JSONException | InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(DateManipulator.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public static String formatDate(LocalDate date, DateTimeFormatter formatter){
+        return date.format(formatter);
     }
     
     public static boolean isKnownHoliday(LocalDate date){
@@ -208,7 +213,7 @@ public class DateManipulator {
             return date.minusDays(Math.abs(numDaysAway));
         }else if(numDaysAway > 0){
             return date.plusDays(Math.abs(numDaysAway));
-        }
+        }        
         return date;
     }
 
