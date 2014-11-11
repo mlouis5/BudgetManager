@@ -35,32 +35,14 @@
 
 		<div class="header" style="color:blue;text-align:center;">The bill below has one or more payments due</div>
 		<div>Bill Id: $envelope.getBill().getBillId()</div>
-		<div>Bill Name: $envelope.getBill().getBillName()</div>
-		<div>Bill Source: $envelope.getBill().getBillSource()</div>
+		<div>Bill Name: $!envelope.getBill().getBillName()</div>
+		<div>Bill Source: $!envelope.getBill().getBillSource()</div>
 		<div>Bill Amount: $envelope.getBill().getBillAmount()</div>
-                <div>Bill Site: $envelope.getBill().getBillWebsite()</div>
+                <div>Bill Site: $!envelope.getBill().getBillWebsite()</div>
 	
 		<div class="paymentsContainer" style="border: 15px solid #78797B;">
 			<div style="color:black;text-align:center;">Payment(s)</div>
 			#foreach( $payment in $envelope.getPayments() )
-				<div class="lineContainer" style="background-color: #B3B5B8;">
-					<div class="paymentLine" style="border-top:3px solid white;height:25px;line-height:25px;">Payment Id: $payment.getPaymentId()</div>
-					<div class="paymentLine" style="border-top: 1px solid white;border-bottom: 1px solid white;height:25px;line-height:25px;">Due On: $payment.getPaymentDueDate()</div>
-					<div class="paymentLine" style="border-bottom:3px solid white;height:25px;line-height:25px;">filed On: $payment.getPaymentFilingDate()</div>
-				</div>
-				
-				<div class="lineContainer" style="background-color: #B3B5B8;">
-					<div class="paymentLine" style="border-top:3px solid white;height:25px;line-height:25px;">Payment Id: $payment.getPaymentId()</div>
-					<div class="paymentLine" style="border-top: 1px solid white;border-bottom: 1px solid white;height:25px;line-height:25px;">Due On: $payment.getPaymentDueDate()</div>
-					<div class="paymentLine" style="border-bottom:3px solid white;height:25px;line-height:25px;">filed On: $payment.getPaymentFilingDate()</div>
-				</div>
-				
-				<div class="lineContainer" style="background-color: #B3B5B8;">
-					<div class="paymentLine" style="border-top:3px solid white;height:25px;line-height:25px;">Payment Id: $payment.getPaymentId()</div>
-					<div class="paymentLine" style="border-top: 1px solid white;border-bottom: 1px solid white;height:25px;line-height:25px;">Due On: $payment.getPaymentDueDate()</div>
-					<div class="paymentLine" style="border-bottom:3px solid white;height:25px;line-height:25px;">filed On: $payment.getPaymentFilingDate()</div>
-				</div>
-				
 				<div class="lineContainer" style="background-color: #B3B5B8;">
 					<div class="paymentLine" style="border-top:3px solid white;height:25px;line-height:25px;">Payment Id: $payment.getPaymentId()</div>
 					<div class="paymentLine" style="border-top: 1px solid white;border-bottom: 1px solid white;height:25px;line-height:25px;">Due On: $payment.getPaymentDueDate()</div>
