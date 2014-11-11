@@ -53,6 +53,10 @@ import org.springframework.stereotype.Component;
     @NamedQuery(name = "Bill.findByBillSitePwd", query = "SELECT b FROM Bill b WHERE b.billSitePwd = :billSitePwd"),
     @NamedQuery(name = "Bill.findByBillIsSatisfied", query = "SELECT b FROM Bill b WHERE b.billIsSatisfied = :billIsSatisfied")})
 public class Bill implements Serializable {
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "bill_amount", nullable = false)
+    private double billAmount;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -279,6 +283,14 @@ public class Bill implements Serializable {
     @Override
     public String toString() {
         return "com.mac.budgetmanager.pojo.entities.Bill[ billId=" + billId + " ]";
+    }
+
+    public double getBillAmount() {
+        return billAmount;
+    }
+
+    public void setBillAmount(double billAmount) {
+        this.billAmount = billAmount;
     }
     
 }

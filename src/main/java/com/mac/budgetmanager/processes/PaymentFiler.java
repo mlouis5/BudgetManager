@@ -9,11 +9,13 @@ import com.mac.budgetmanager.pojo.entities.Payment;
 import com.mac.budgetmanager.pojo.entities.dao.AbstractRepository;
 import java.util.List;
 import java.util.Objects;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Mac
  */
+@Component
 public class PaymentFiler implements Runnable{
 
     private List<Payment> paymentsToFile;
