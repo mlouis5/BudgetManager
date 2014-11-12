@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>MyBudget</title>
+        <meta name="description" content="A budget manager.">
+        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="tabs.css">
+        <link rel="stylesheet" href="listItem.css">
+    </head>
+    <body>
+
+        <h1 class="heading">MyBudget</h1>
+        <div id="mainContainer">
+            <div class="resourceContainer">
+                <ul id="resourceTabs">
+                    <li><a href="#" title="billTab">Bills</a></li>
+                    <li><a href="#" title="incomeTab">Income</a></li>
+                </ul>
+
+                <div id="resourceContent">
+
+                    <div id="billTab">
+                        <section class="summary">
+                            <ul class="nav">                                
+                                <li rv-each-bill="displayData.bills">
+                                    <a href="#">
+                                        <span class="icon-facetime-video"></span><span class="text">{ bill.billName }</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </section>
+
+                        <section class="details">
+                            this is the details
+                        </section>
+
+                    </div>
+
+                    <div id="incomeTab">
+
+                        <section class="summary">
+                            this is the summary
+                        </section>
+
+                        <section class="details">
+                            this is the details
+                        </section>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="resourceContainer">
+                <ul id="collectiveTabs">
+                    <li><a href="#" title="paymentTab">Payments</a></li>
+                    <li><a href="#" title="paycheckTab">Paychecks</a></li>
+                </ul>
+
+                <div id="collectiveContent">
+
+                    <div id="paymentTab">
+                        <section class="summary">
+                            <ul class="nav">                                
+                                <li rv-each-bill="displayData.bills">
+                                    <a href="#">
+                                        <span class="icon-facetime-video"></span><span class="text">{ bill.billName }</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </section>
+
+                        <section class="details">
+                            this is the details
+                        </section>
+
+                    </div>
+
+                    <div id="paycheckTab">
+
+                        <section class="summary">
+                            this is the summary
+                        </section>
+
+                        <section class="details">
+                            this is the details
+                        </section>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            function LoadScriptsSequentially(scriptUrls, callback)
+            {
+                if (typeof scriptUrls === 'undefined')
+                    throw "Argument Error: URL array is unusable";
+                if (scriptUrls.length === 0 && typeof callback === 'function')
+                    callback();
+                $.getScript(scriptUrls.shift(), function () {
+                    LoadScriptsSequentially(scriptUrls, callback);
+                });
+            }
+
+            LoadScriptsSequentially([
+                "/js/libs/jquery.js",
+                "/js/libs/rivets.bundled.min.js",
+                "/js/custom/tabs.js",
+                "/js/custom/pageBinding.js"
+            ]);
+        </script>
+        <!--<script type="text/javascript" src="js/libs/jquery.js"></script>
+        <script type="text/javascript" src="js/libs/rivets.bundled.min.js"></script>
+        <script charset="utf-8" type="text/javascript" src="js/custom/tabs.js"></script>
+        <script charset="utf-8" type="text/javascript" src="js/custom/pageBinding.js"></script>-->
+    </body>
+</html>
