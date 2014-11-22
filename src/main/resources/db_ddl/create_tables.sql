@@ -73,7 +73,8 @@ CREATE TABLE budget.payment
     payment_due_date date not null,
     payment_filing_date date not null,
     payment_last_notification_date date,
-    payment_paid_date date
+    payment_paid_date date,
+    payment_qrcode_location text
 ) 
 WITH (
   OIDS = FALSE
