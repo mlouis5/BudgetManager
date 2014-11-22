@@ -18,6 +18,7 @@ WITH (
   OIDS = FALSE
 )
 ;
+CREATE UNIQUE INDEX address_id_idx ON budget.address USING btree ( address_id );
 ALTER TABLE budget.address
   OWNER TO postgres;
 
@@ -35,6 +36,7 @@ WITH (
   OIDS = FALSE
 )
 ;
+CREATE UNIQUE INDEX user_id_idx ON budget.user USING btree ( user_id );
 ALTER TABLE budget."user"
   OWNER TO postgres;
 
@@ -62,6 +64,7 @@ WITH (
   OIDS = FALSE
 )
 ;
+CREATE UNIQUE INDEX bill_id_idx ON budget.bill USING btree ( bill_id );
 ALTER TABLE budget.bill
   OWNER TO postgres;
 
@@ -80,6 +83,7 @@ WITH (
   OIDS = FALSE
 )
 ;
+CREATE UNIQUE INDEX payment_id_idx ON budget.payment USING btree ( payment_id );
 ALTER TABLE budget.payment
   OWNER TO postgres;
 
@@ -107,6 +111,7 @@ WITH (
   OIDS = FALSE
 )
 ;
+CREATE UNIQUE INDEX paycheck_id_idx ON budget.paycheck USING btree ( paycheck_id );
 ALTER TABLE budget.paycheck
   OWNER TO postgres;
 
@@ -121,5 +126,6 @@ WITH (
   OIDS = FALSE
 )
 ;
+CREATE UNIQUE INDEX income_id_idx ON budget.income USING btree ( income_id );
 ALTER TABLE budget.income
   OWNER TO postgres;
