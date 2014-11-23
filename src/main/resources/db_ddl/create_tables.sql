@@ -24,11 +24,11 @@ ALTER TABLE budget.address
 
   CREATE TABLE budget."user"
 (
-    user_id char(32) unique not null primary key,		--generated from email address, fname, lname
+    user_id char(32) unique not null,		--generated from email address, fname, lname
     user_fname varchar(128) not null,
     user_lname varchar(128) not null,
     user_phone varchar(10),
-    user_email text not null,
+    user_email text unique not null primary key,
     user_preferred_contact varchar(5) default 'EMAIL',
     user_address bigint references budget.address(address_id) on update cascade on delete cascade default null
 ) 
@@ -37,13 +37,14 @@ WITH (
 )
 ;
 CREATE UNIQUE INDEX user_id_idx ON budget.user USING btree ( user_id );
+CREATE UNIQUE INDEX user_email_idx ON budget.user USING btree ( user_email );
 ALTER TABLE budget."user"
   OWNER TO postgres;
 
 CREATE TABLE budget.bill
 (
     bill_id char(32) unique not null primary key,	--generated using bill_owner, bill_source, bill_due_date
-    bill_owner char(32) not null references budget."user"(user_id) on update cascade on delete cascade,
+    bill_owner text not null references budget."user"(user_email) on update cascade on delete cascade,
     bill_name varchar(128),
     bill_source varchar(128) not null,
     bill_type varchar(128) default 'OTHER',
@@ -53,7 +54,7 @@ CREATE TABLE budget.bill
     bill_amount double precision not null,
     bill_late_fee_amount double precision,
     bill_interest_rate double precision,
-    bill_grace_period integer check(bill_grace_period <= 15),
+    bill_grace_period integer check(bill_grace_period <= 31),
     bill_website text,
     bill_site_user_id text,
     bill_site_pwd text,
