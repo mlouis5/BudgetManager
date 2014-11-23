@@ -155,7 +155,7 @@ public class User implements Serializable {
         this.userPreferredContact = userPreferredContact;
     }
 
-    @XmlTransient
+    //@XmlTransient
     public List<Income> getIncomeList() {
         return incomeList;
     }
@@ -164,7 +164,7 @@ public class User implements Serializable {
         this.incomeList = incomeList;
     }
 
-    @XmlTransient
+    //@XmlTransient
     public List<Bill> getBillList() {
         return billList;
     }
@@ -190,7 +190,7 @@ public class User implements Serializable {
         this.userAddress = userAddress;
     }
 
-    @XmlTransient
+    //@XmlTransient
     public List<Paycheck> getPaycheckList() {
         return paycheckList;
     }

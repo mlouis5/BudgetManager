@@ -27,6 +27,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -49,6 +50,9 @@ import org.springframework.stereotype.Component;
     @NamedQuery(name = "Payment.findByPaymentPaidDate", query = "SELECT p FROM Payment p WHERE p.paymentPaidDate = :paymentPaidDate")})
 public class Payment implements Serializable {
 
+    @Size(max = 2147483647)
+    @Column(name = "payment_qrcode_location", length = 2147483647)
+    private String paymentQrcodeLocation;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -125,6 +129,7 @@ public class Payment implements Serializable {
         this.paymentPaidDate = paymentPaidDate;
     }
 
+    @XmlTransient
     public Bill getPaymentBillId() {
         return paymentBillId;
     }
@@ -134,6 +139,7 @@ public class Payment implements Serializable {
         generateId();
     }
 
+    @XmlTransient
     public User getPaymentUserId() {
         return paymentUserId;
     }
@@ -178,5 +184,13 @@ public class Payment implements Serializable {
                     .putString(paymentBillId.getBillOwner().getUserId(), Charsets.UTF_8).hash();
             this.paymentId = hc.toString();
         }
+    }
+    
+    public String getPaymentQrcodeLocation() {
+        return paymentQrcodeLocation;
+    }
+
+    public void setPaymentQrcodeLocation(String paymentQrcodeLocation) {
+        this.paymentQrcodeLocation = paymentQrcodeLocation;
     }
 }

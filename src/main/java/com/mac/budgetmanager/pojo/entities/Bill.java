@@ -249,12 +249,12 @@ public class Bill implements Serializable {
         return billOwner;
     }
 
+    @XmlTransient
     public void setBillOwner(User billOwner) {
         this.billOwner = billOwner;
         generateId();
     }
 
-    @XmlTransient
     public List<Payment> getPaymentList() {
         return paymentList;
     }
