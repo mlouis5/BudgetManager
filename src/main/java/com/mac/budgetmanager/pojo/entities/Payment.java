@@ -48,6 +48,7 @@ import org.springframework.stereotype.Component;
     @NamedQuery(name = "Payment.findByPaymentLastNotificationDate", query = "SELECT p FROM Payment p WHERE p.paymentLastNotificationDate = :paymentLastNotificationDate"),
     @NamedQuery(name = "Payment.findByPaymentPaidDate", query = "SELECT p FROM Payment p WHERE p.paymentPaidDate = :paymentPaidDate")})
 public class Payment implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -78,14 +79,15 @@ public class Payment implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private User paymentUserId;
 
-    public Payment() {}
+    public Payment() {
+    }
 
     public String getPaymentId() {
         return paymentId;
     }
 
     public void setPaymentId(String paymentId) {
-        if(Objects.isNull(this.paymentId) || this.paymentId.isEmpty()){
+        if (Objects.isNull(this.paymentId) || this.paymentId.isEmpty()) {
             this.paymentId = paymentId;
         }
     }
@@ -96,6 +98,7 @@ public class Payment implements Serializable {
 
     public void setPaymentDueDate(Date paymentDueDate) {
         this.paymentDueDate = paymentDueDate;
+        generateId();
     }
 
     public Date getPaymentFilingDate() {
@@ -128,6 +131,7 @@ public class Payment implements Serializable {
 
     public void setPaymentBillId(Bill paymentBillId) {
         this.paymentBillId = paymentBillId;
+        generateId();
     }
 
     public User getPaymentUserId() {
@@ -159,5 +163,20 @@ public class Payment implements Serializable {
     public String toString() {
         return "com.mac.budgetmanager.pojo.entities.Payment[ paymentId=" + paymentId + " ]";
     }
-    
+
+    private void generateId() {
+        if (Objects.nonNull(paymentDueDate) && Objects.nonNull(paymentBillId)
+                && Objects.nonNull(paymentBillId.getBillId())
+                && !paymentBillId.getBillId().isEmpty()
+                && Objects.nonNull(paymentBillId.getBillOwner())
+                && Objects.nonNull(paymentBillId.getBillOwner().getUserId())
+                && !paymentBillId.getBillOwner().getUserId().isEmpty()) {
+            HashFunction hf = Hashing.md5();
+            HashCode hc = hf.newHasher()
+                    .putLong(paymentDueDate.getTime())
+                    .putString(paymentBillId.getBillId(), Charsets.UTF_8)
+                    .putString(paymentBillId.getBillOwner().getUserId(), Charsets.UTF_8).hash();
+            this.paymentId = hc.toString();
+        }
+    }
 }

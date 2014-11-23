@@ -5,8 +5,13 @@
  */
 package com.mac.budgetmanager.pojo.entities;
 
+import com.google.common.base.Charsets;
+import com.google.common.hash.HashCode;
+import com.google.common.hash.HashFunction;
+import com.google.common.hash.Hashing;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -53,6 +58,7 @@ import org.springframework.stereotype.Component;
     @NamedQuery(name = "Bill.findByBillSitePwd", query = "SELECT b FROM Bill b WHERE b.billSitePwd = :billSitePwd"),
     @NamedQuery(name = "Bill.findByBillIsSatisfied", query = "SELECT b FROM Bill b WHERE b.billIsSatisfied = :billIsSatisfied")})
 public class Bill implements Serializable {
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "bill_amount", nullable = false)
@@ -95,10 +101,12 @@ public class Bill implements Serializable {
     private String billWebsite;
     @Size(max = 2147483647)
     @Column(name = "bill_site_user_id", length = 2147483647)
-    private String billSiteUserId;
+    @XmlTransient
+    private transient String billSiteUserId;
     @Size(max = 2147483647)
     @Column(name = "bill_site_pwd", length = 2147483647)
-    private String billSitePwd;
+    @XmlTransient
+    private transient String billSitePwd;
     @Column(name = "bill_is_satisfied")
     private Boolean billIsSatisfied;
     @JoinColumn(name = "bill_mail_address", referencedColumnName = "address_id")
@@ -113,22 +121,14 @@ public class Bill implements Serializable {
     public Bill() {
     }
 
-    public Bill(String billId) {
-        this.billId = billId;
-    }
-
-    public Bill(String billId, String billSource, int billDueDate) {
-        this.billId = billId;
-        this.billSource = billSource;
-        this.billDueDate = billDueDate;
-    }
-
     public String getBillId() {
         return billId;
     }
 
     public void setBillId(String billId) {
-        this.billId = billId;
+        if (Objects.isNull(this.billId) || this.billId.isEmpty()) {
+            this.billId = billId;
+        }
     }
 
     public String getBillName() {
@@ -145,6 +145,7 @@ public class Bill implements Serializable {
 
     public void setBillSource(String billSource) {
         this.billSource = billSource;
+        generateId();
     }
 
     public String getBillType() {
@@ -161,6 +162,7 @@ public class Bill implements Serializable {
 
     public void setBillDueDate(int billDueDate) {
         this.billDueDate = billDueDate;
+        generateId();
     }
 
     public Boolean getBillIsRevolving() {
@@ -249,6 +251,7 @@ public class Bill implements Serializable {
 
     public void setBillOwner(User billOwner) {
         this.billOwner = billOwner;
+        generateId();
     }
 
     @XmlTransient
@@ -262,22 +265,19 @@ public class Bill implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (billId != null ? billId.hashCode() : 0);
-        return hash;
+        HashFunction hf = Hashing.md5();
+        HashCode hc = hf.newHasher().putString(billId, Charsets.UTF_8).hash();
+        return hc.asInt();
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Bill)) {
+        if (!(object instanceof Payment)) {
             return false;
         }
         Bill other = (Bill) object;
-        if ((this.billId == null && other.billId != null) || (this.billId != null && !this.billId.equals(other.billId))) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.billId, other.billId);
     }
 
     @Override
@@ -291,6 +291,27 @@ public class Bill implements Serializable {
 
     public void setBillAmount(double billAmount) {
         this.billAmount = billAmount;
+        generateId();
     }
-    
+
+    private void generateId() {
+        if (Objects.nonNull(billDueDate) && Objects.nonNull(billSource)
+                && Objects.nonNull(billOwner)
+                && !billSource.isEmpty()
+                && billAmount > 0
+                && Objects.nonNull(billOwner.getUserEmail())
+                && Objects.nonNull(billOwner.getUserFname())
+                && Objects.nonNull(billOwner.getUserLname())) {
+            HashFunction hf = Hashing.md5();
+            HashCode hc = hf.newHasher()
+                    .putDouble(billAmount)
+                    .putString(billSource, Charsets.UTF_8)
+                    .putInt(billDueDate)
+                    .putString(billOwner.getUserEmail(), Charsets.UTF_8)
+                    .putString(billOwner.getUserFname(), Charsets.UTF_8)
+                    .putString(billOwner.getUserLname(), Charsets.UTF_8)
+                    .putInt(billOwner.hashCode()).hash();
+            this.billId = hc.toString();
+        }
+    }
 }

@@ -5,8 +5,13 @@
  */
 package com.mac.budgetmanager.pojo.entities;
 
+import com.google.common.base.Charsets;
+import com.google.common.hash.HashCode;
+import com.google.common.hash.HashFunction;
+import com.google.common.hash.Hashing;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -45,6 +50,7 @@ import org.springframework.stereotype.Component;
     @NamedQuery(name = "User.findByUserEmail", query = "SELECT u FROM User u WHERE u.userEmail = :userEmail"),
     @NamedQuery(name = "User.findByUserPreferredContact", query = "SELECT u FROM User u WHERE u.userPreferredContact = :userPreferredContact")})
 public class User implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -88,15 +94,12 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String userId) {
-        this.userId = userId;
-    }
+    public User(String fName, String lName, String email) {
+        this.userFname = fName;
+        this.userLname = lName;
+        this.userEmail = email;
 
-    public User(String userId, String userFname, String userLname, String userEmail) {
-        this.userId = userId;
-        this.userFname = userFname;
-        this.userLname = userLname;
-        this.userEmail = userEmail;
+        generateId();
     }
 
     public String getUserId() {
@@ -104,7 +107,9 @@ public class User implements Serializable {
     }
 
     public void setUserId(String userId) {
-        this.userId = userId;
+        if(Objects.isNull(this.userId) || this.userId.isEmpty()){
+            this.userId = userId;
+        }
     }
 
     public String getUserFname() {
@@ -113,6 +118,7 @@ public class User implements Serializable {
 
     public void setUserFname(String userFname) {
         this.userFname = userFname;
+        generateId();
     }
 
     public String getUserLname() {
@@ -121,6 +127,7 @@ public class User implements Serializable {
 
     public void setUserLname(String userLname) {
         this.userLname = userLname;
+        generateId();
     }
 
     public String getUserPhone() {
@@ -137,6 +144,7 @@ public class User implements Serializable {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+        generateId();
     }
 
     public String getUserPreferredContact() {
@@ -193,27 +201,34 @@ public class User implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (userId != null ? userId.hashCode() : 0);
-        return hash;
+        HashFunction hf = Hashing.md5();
+        HashCode hc = hf.newHasher().putString(userId, Charsets.UTF_8).hash();
+        return hc.asInt();
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof User)) {
+        if (!(object instanceof Payment)) {
             return false;
         }
         User other = (User) object;
-        if ((this.userId == null && other.userId != null) || (this.userId != null && !this.userId.equals(other.userId))) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.userId, other.userId);
     }
 
     @Override
     public String toString() {
         return "com.mac.budgetmanager.pojo.entities.User[ userId=" + userId + " ]";
     }
-    
+
+    private void generateId() {
+        if (Objects.nonNull(userFname) && Objects.nonNull(userLname) && Objects.nonNull(userEmail)) {
+            HashFunction hf = Hashing.md5();
+            HashCode hc = hf.newHasher()
+                    .putString(userFname, Charsets.UTF_8)
+                    .putString(userLname, Charsets.UTF_8)
+                    .putString(userEmail, Charsets.UTF_8).hash();
+            this.userId = hc.toString();
+        }
+    }
 }
