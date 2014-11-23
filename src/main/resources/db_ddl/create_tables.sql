@@ -84,7 +84,7 @@ WITH (
   OIDS = FALSE
 )
 ;
-CREATE UNIQUE INDEX payment_id_idx ON budget.payment USING btree ( payment_id );
+CREATE INDEX payment_id_idx ON budget.payment USING btree ( payment_id );
 ALTER TABLE budget.payment
   OWNER TO postgres;
 
@@ -127,6 +127,6 @@ WITH (
   OIDS = FALSE
 )
 ;
-CREATE UNIQUE INDEX income_id_idx ON budget.income USING btree ( income_id );
+CREATE INDEX income_id_idx ON budget.income USING btree ( income_id );
 ALTER TABLE budget.income
   OWNER TO postgres;
