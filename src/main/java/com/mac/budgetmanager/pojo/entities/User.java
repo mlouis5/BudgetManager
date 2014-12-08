@@ -52,7 +52,7 @@ import org.springframework.stereotype.Component;
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 36)
@@ -71,6 +71,7 @@ public class User implements Serializable {
     @Size(max = 10)
     @Column(name = "user_phone", length = 10)
     private String userPhone;
+    @Id
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
