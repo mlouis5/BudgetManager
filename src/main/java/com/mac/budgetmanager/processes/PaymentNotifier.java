@@ -126,10 +126,12 @@ public class PaymentNotifier {
                     boolean isSent = sendMail(bill, writer.toString());
                     if(isSent){
                         Date notificationDate = ctx.getBean(Date.class);
-                        for(Payment p : payments){
+                        payments.stream().map((p) -> {
                             p.setPaymentLastNotificationDate(notificationDate);
+                            return p;
+                        }).forEach((p) -> {
                             paymentDAO.edit(p);
-                        }
+                        });
                     }
                 }
             } catch (BeansException | ResourceNotFoundException | ParseErrorException | MethodInvocationException ex) {

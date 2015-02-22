@@ -7,7 +7,7 @@ drop table if exists budget.address;
 
 CREATE TABLE budget.address
 (
-    address_id serial not null unique primary key,
+    address_id varchar(32) not null unique primary key,
     address_line_1 varchar(256) not null,
     address_line_2 varchar(256),
     address_city varchar(256) not null,
@@ -24,13 +24,13 @@ ALTER TABLE budget.address
 
   CREATE TABLE budget."user"
 (
-    user_id char(32) unique not null,		--generated from email address, fname, lname
+    user_id char(32) unique not null primary key, --generated from email address, fname, lname
     user_fname varchar(128) not null,
     user_lname varchar(128) not null,
     user_phone varchar(10),
-    user_email text unique not null primary key,
+    user_email text unique not null,
     user_preferred_contact varchar(5) default 'EMAIL',
-    user_address bigint references budget.address(address_id) on update cascade on delete cascade default null
+    user_address varchar(32) references budget.address(address_id) on update cascade on delete cascade default null
 ) 
 WITH (
   OIDS = FALSE
@@ -44,7 +44,7 @@ ALTER TABLE budget."user"
 CREATE TABLE budget.bill
 (
     bill_id char(32) unique not null primary key,	--generated using bill_owner, bill_source, bill_due_date
-    bill_owner text not null references budget."user"(user_email) on update cascade on delete cascade,
+    bill_owner char(32) not null references budget."user"(user_id) on update cascade on delete cascade,
     bill_name varchar(128),
     bill_source varchar(128) not null,
     bill_type varchar(128) default 'OTHER',
@@ -58,7 +58,7 @@ CREATE TABLE budget.bill
     bill_website text,
     bill_site_user_id text,
     bill_site_pwd text,
-    bill_mail_address bigint references budget.address(address_id) on update no action on delete no action,
+    bill_mail_address varchar(32) references budget.address(address_id) on update no action on delete no action,
     bill_is_satisfied boolean default false
 ) 
 WITH (

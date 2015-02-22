@@ -37,7 +37,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class BillProcessor {
 
-    private static final int NOTIFICATION_GAP = 2;
     private static final int COMING_DUE_TIMEFRAME = 15;
     private static final int DAYSNOTICE_PRIOR_TO_PAYMENT = 10;
 
@@ -48,7 +47,7 @@ public class BillProcessor {
      * Processes the bill in the Bill table, files payments if necessary
      */
     //@Scheduled(fixedDelay = 10000)
-    @Scheduled(cron = "0 0 6,12,16 * * *")    
+    @Scheduled(cron = "0 0 6,9,12,15,18 * * *")    
     public void processBills() {
         BillRepository billDAO = ctx.getBean(BillRepository.class);
         List<Bill> allBills = billDAO.findAll();
@@ -61,7 +60,6 @@ public class BillProcessor {
                         Payment payment = fileNewPayment(bill);
                         if (Objects.nonNull(payment.getPaymentId())
                                 && Objects.nonNull(payment.getPaymentId()) && !payment.getPaymentId().isEmpty()) {
-
                             paymentsToFile.add(payment);
                         }
                     }
@@ -135,7 +133,7 @@ public class BillProcessor {
     }
 
     /**
-     * Determines if a payment has already been file for this payment,<br>
+     * Determines if a payment has already been filed for this payment,<br>
      * for the month in which it is due.
      * @param bill the Bill in question.
      * @return true or false (false) will see a new payment generated, and <br>

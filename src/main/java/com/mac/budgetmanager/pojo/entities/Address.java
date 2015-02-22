@@ -7,6 +7,7 @@ package com.mac.budgetmanager.pojo.entities;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,7 +50,7 @@ public class Address implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "address_id", nullable = false)
-    private Integer addressId;
+    private String addressId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 256)
@@ -81,11 +82,11 @@ public class Address implements Serializable {
     public Address() {
     }
 
-    public Address(Integer addressId) {
+    public Address(String addressId) {
         this.addressId = addressId;
     }
 
-    public Address(Integer addressId, String addressLine1, String addressCity, String addressState, String addressZipcode) {
+    public Address(String addressId, String addressLine1, String addressCity, String addressState, String addressZipcode) {
         this.addressId = addressId;
         this.addressLine1 = addressLine1;
         this.addressCity = addressCity;
@@ -93,11 +94,11 @@ public class Address implements Serializable {
         this.addressZipcode = addressZipcode;
     }
 
-    public Integer getAddressId() {
+    public String getAddressId() {
         return addressId;
     }
 
-    public void setAddressId(Integer addressId) {
+    public void setAddressId(String addressId) {
         this.addressId = addressId;
     }
 
@@ -173,10 +174,7 @@ public class Address implements Serializable {
             return false;
         }
         Address other = (Address) object;
-        if ((this.addressId == null && other.addressId != null) || (this.addressId != null && !this.addressId.equals(other.addressId))) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.addressId, other.addressId);
     }
 
     @Override

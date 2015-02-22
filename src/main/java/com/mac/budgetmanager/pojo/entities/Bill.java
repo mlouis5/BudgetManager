@@ -54,8 +54,6 @@ import org.springframework.stereotype.Component;
     @NamedQuery(name = "Bill.findByBillInterestRate", query = "SELECT b FROM Bill b WHERE b.billInterestRate = :billInterestRate"),
     @NamedQuery(name = "Bill.findByBillGracePeriod", query = "SELECT b FROM Bill b WHERE b.billGracePeriod = :billGracePeriod"),
     @NamedQuery(name = "Bill.findByBillWebsite", query = "SELECT b FROM Bill b WHERE b.billWebsite = :billWebsite"),
-    @NamedQuery(name = "Bill.findByBillSiteUserId", query = "SELECT b FROM Bill b WHERE b.billSiteUserId = :billSiteUserId"),
-    @NamedQuery(name = "Bill.findByBillSitePwd", query = "SELECT b FROM Bill b WHERE b.billSitePwd = :billSitePwd"),
     @NamedQuery(name = "Bill.findByBillIsSatisfied", query = "SELECT b FROM Bill b WHERE b.billIsSatisfied = :billIsSatisfied")})
 public class Bill implements Serializable {
 
@@ -67,8 +65,8 @@ public class Bill implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 36)
-    @Column(name = "bill_id", nullable = false, length = 36)
+    @Size(min = 1, max = 32)
+    @Column(name = "bill_id", nullable = false, length = 32)
     private String billId;
     @Size(max = 128)
     @Column(name = "bill_name", length = 128)
@@ -145,7 +143,7 @@ public class Bill implements Serializable {
 
     public void setBillSource(String billSource) {
         this.billSource = billSource;
-        generateId();
+//        generateId();
     }
 
     public String getBillType() {
@@ -162,7 +160,7 @@ public class Bill implements Serializable {
 
     public void setBillDueDate(int billDueDate) {
         this.billDueDate = billDueDate;
-        generateId();
+//        generateId();
     }
 
     public Boolean getBillIsRevolving() {
@@ -252,7 +250,7 @@ public class Bill implements Serializable {
     @XmlTransient
     public void setBillOwner(User billOwner) {
         this.billOwner = billOwner;
-        generateId();
+//        generateId();
     }
 
     public List<Payment> getPaymentList() {
@@ -291,27 +289,27 @@ public class Bill implements Serializable {
 
     public void setBillAmount(double billAmount) {
         this.billAmount = billAmount;
-        generateId();
+//        generateId();
     }
 
-    private void generateId() {
-        if (Objects.nonNull(billDueDate) && Objects.nonNull(billSource)
-                && Objects.nonNull(billOwner)
-                && !billSource.isEmpty()
-                && billAmount > 0
-                && Objects.nonNull(billOwner.getUserEmail())
-                && Objects.nonNull(billOwner.getUserFname())
-                && Objects.nonNull(billOwner.getUserLname())) {
-            HashFunction hf = Hashing.md5();
-            HashCode hc = hf.newHasher()
-                    .putDouble(billAmount)
-                    .putString(billSource, Charsets.UTF_8)
-                    .putInt(billDueDate)
-                    .putString(billOwner.getUserEmail(), Charsets.UTF_8)
-                    .putString(billOwner.getUserFname(), Charsets.UTF_8)
-                    .putString(billOwner.getUserLname(), Charsets.UTF_8)
-                    .putInt(billOwner.hashCode()).hash();
-            this.billId = hc.toString();
-        }
-    }
+//    private void generateId() {
+//        if (Objects.nonNull(billDueDate) && Objects.nonNull(billSource)
+//                && Objects.nonNull(billOwner)
+//                && !billSource.isEmpty()
+//                && billAmount > 0
+//                && Objects.nonNull(billOwner.getUserEmail())
+//                && Objects.nonNull(billOwner.getUserFname())
+//                && Objects.nonNull(billOwner.getUserLname())) {
+//            HashFunction hf = Hashing.md5();
+//            HashCode hc = hf.newHasher()
+//                    .putDouble(billAmount)
+//                    .putString(billSource, Charsets.UTF_8)
+//                    .putInt(billDueDate)
+//                    .putString(billOwner.getUserEmail(), Charsets.UTF_8)
+//                    .putString(billOwner.getUserFname(), Charsets.UTF_8)
+//                    .putString(billOwner.getUserLname(), Charsets.UTF_8)
+//                    .putInt(billOwner.hashCode()).hash();
+//            this.billId = hc.toString();
+//        }
+//    }
 }

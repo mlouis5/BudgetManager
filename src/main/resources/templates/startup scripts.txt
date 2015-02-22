@@ -1,0 +1,2 @@
+sudo nohup java -jar BudgetSocket-1.0-jar-with-dependencies.jar & > budgetSocket.log.txt
+sudo nohup java -jar BudgetManager-1.0.jar & > budgetManager.log.txt
