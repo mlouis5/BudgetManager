@@ -9,10 +9,14 @@ import com.google.common.base.Charsets;
 import com.google.common.hash.HashCode;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
-import com.mac.budgetmanager.pojo.entities.Bill;
-import com.mac.budgetmanager.pojo.entities.Payment;
-import com.mac.budgetmanager.pojo.entities.dao.impl.BillRepository;
-import com.mac.budgetmanager.pojo.entities.dao.impl.PaymentRepository;
+import com.mac.abstractrepository.budgetrepo.BillDao;
+import com.mac.abstractrepository.budgetrepo.PaymentDao;
+import com.mac.budgetentities.pojos.Bill;
+import com.mac.budgetentities.pojos.Payment;
+//import com.mac.budgetmanager.pojo.entities.Bill;
+//import com.mac.budgetmanager.pojo.entities.Payment;
+//import com.mac.budgetmanager.pojo.entities.dao.impl.BillRepository;
+//import com.mac.budgetmanager.pojo.entities.dao.impl.PaymentRepository;
 import com.mac.common.utilities.dates.DateManipulator;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -49,7 +53,7 @@ public class BillProcessor {
     //@Scheduled(fixedDelay = 10000)
     @Scheduled(cron = "0 0 6,9,12,15,18 * * *")    
     public void processBills() {
-        BillRepository billDAO = ctx.getBean(BillRepository.class);
+        BillDao billDAO = ctx.getBean(BillDao.class);
         List<Bill> allBills = billDAO.findAll();
         if (Objects.nonNull(allBills) && !allBills.isEmpty()) {
             List<Payment> paymentsToFile = ctx.getBean(ArrayList.class);
@@ -66,7 +70,7 @@ public class BillProcessor {
                 }
             });
             PaymentFiler filer = ctx.getBean(PaymentFiler.class);
-            PaymentRepository pr = ctx.getBean(PaymentRepository.class);
+            PaymentDao pr = ctx.getBean(PaymentDao.class);
             filer.setup(pr, paymentsToFile);
             ThreadPoolTaskExecutor executor = ctx.getBean(ThreadPoolTaskExecutor.class);
             executor.execute(filer);

@@ -10,14 +10,14 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.1.9.RELEASE</version>
+        <version>1.2.1.RELEASE</version>
     </parent>
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <spring.version>4.1.1.RELEASE</spring.version>
+        <spring.version>4.1.4.RELEASE</spring.version>
         <eclipse.persistence.version>2.5.2</eclipse.persistence.version>
         <h2.db.version>1.4.182</h2.db.version>
     </properties>
@@ -50,6 +50,16 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>9.3-1102-jdbc41</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mac</groupId>
+            <artifactId>BudgetEntities</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mac</groupId>
+            <artifactId>AbstractRepository</artifactId>
+            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
@@ -96,7 +106,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
-            <version>${spring.version}</version>
+            <version>4.1.4.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -106,7 +116,6 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
-            <version>${spring.version}</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
@@ -118,7 +127,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
-            <version>1.1.8.RELEASE</version>
+            <version>1.2.1.RELEASE</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -145,7 +154,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>${h2.db.version}</version>
+            <version>1.4.185</version>
         </dependency>
         <dependency>
             <groupId>org.apache.velocity</groupId>
@@ -163,7 +172,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
-            <version>1.7.7</version>
+            <version>1.7.10</version>
         </dependency>
     </dependencies>
     
@@ -181,7 +190,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>1.1.9.RELEASE</version>
             </plugin>
         </plugins>
     </build>

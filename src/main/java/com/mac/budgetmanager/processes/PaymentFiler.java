@@ -5,8 +5,9 @@
  */
 package com.mac.budgetmanager.processes;
 
-import com.mac.budgetmanager.pojo.entities.Payment;
-import com.mac.budgetmanager.pojo.entities.dao.AbstractRepository;
+import com.mac.abstractrepository.AbstractRepository;
+import com.mac.abstractrepository.budgetrepo.PaymentDao;
+import com.mac.budgetentities.pojos.Payment;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.stereotype.Component;
@@ -28,7 +29,7 @@ public class PaymentFiler implements Runnable{
         this.repo = repo;
     }
     
-    public void setup(AbstractRepository<Payment> repo, List<Payment> payments){
+    public void setup(PaymentDao repo, List<Payment> payments){
         paymentsToFile = payments;
         this.repo = repo;
     }

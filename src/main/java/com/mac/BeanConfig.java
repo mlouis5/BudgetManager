@@ -5,8 +5,17 @@
  */
 package com.mac;
 
+import com.mac.abstractrepository.budgetrepo.AddressDao;
+import com.mac.abstractrepository.budgetrepo.BillDao;
+import com.mac.abstractrepository.budgetrepo.PaymentDao;
+import com.mac.abstractrepository.budgetrepo.UserDao;
+import com.mac.budgetentities.pojos.Address;
+import com.mac.budgetentities.pojos.Bill;
+import com.mac.budgetentities.pojos.Income;
+import com.mac.budgetentities.pojos.Paycheck;
+import com.mac.budgetentities.pojos.Payment;
+import com.mac.budgetentities.pojos.User;
 import com.mac.budgetmanager.pojo.PaymentEnvelope;
-import com.mac.budgetmanager.pojo.entities.Payment;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -117,6 +126,60 @@ public class BeanConfig {
         return new PaymentEnvelope();
     }
 
+    @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public User user(){
+        return new User();
+    }
     
+    @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public Bill bill(){
+        return new Bill();
+    }
+    
+    @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public Address address(){
+        return new Address();
+    }
+    
+    @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public Income income(){
+        return new Income();
+    }
+    
+    @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public Paycheck paycheck(){
+        return new Paycheck();
+    }
+    
+    @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public com.mac.budgetentities.pojos.Payment payment(){
+        return new com.mac.budgetentities.pojos.Payment();
+    }
+    
+    @Bean
+    public UserDao userDao(){
+        return new UserDao();
+    }
+    
+    @Bean
+    public BillDao billDao(){
+        return new BillDao();
+    }
+    
+    @Bean
+    public AddressDao addressDao(){
+        return new AddressDao();
+    }
+    
+    @Bean
+    public PaymentDao paymentDao(){
+        return new PaymentDao();
+    }
 
 }

@@ -5,10 +5,10 @@
  */
 package com.mac.budgetmanager.processes;
 
+import com.mac.abstractrepository.budgetrepo.PaymentDao;
+import com.mac.budgetentities.pojos.Bill;
+import com.mac.budgetentities.pojos.Payment;
 import com.mac.budgetmanager.pojo.PaymentEnvelope;
-import com.mac.budgetmanager.pojo.entities.Bill;
-import com.mac.budgetmanager.pojo.entities.Payment;
-import com.mac.budgetmanager.pojo.entities.dao.impl.PaymentRepository;
 import java.io.StringWriter;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -53,7 +53,7 @@ public class PaymentNotifier {
     //@Scheduled(cron = "0 2 6,12,16 * * *")
     @Scheduled(fixedDelay = 13000)
     public void notifyUsers() {
-        PaymentRepository paymentDAO = ctx.getBean(PaymentRepository.class);
+        PaymentDao paymentDAO = ctx.getBean(PaymentDao.class);
         List<Payment> allPayments = paymentDAO.findAll();
 
         if (Objects.nonNull(allPayments)) {
@@ -101,7 +101,7 @@ public class PaymentNotifier {
         }
     }
 
-    private void notify(Map<Bill, List<Payment>> notifications, PaymentRepository paymentDAO) {
+    private void notify(Map<Bill, List<Payment>> notifications, PaymentDao paymentDAO) {
         if (Objects.nonNull(notifications)) {
             try {
                 VelocityEngine ve = ctx.getBean("velocityEngine", VelocityEngine.class);

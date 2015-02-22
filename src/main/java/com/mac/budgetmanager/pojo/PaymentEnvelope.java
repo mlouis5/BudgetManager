@@ -5,8 +5,8 @@
  */
 package com.mac.budgetmanager.pojo;
 
-import com.mac.budgetmanager.pojo.entities.Bill;
-import com.mac.budgetmanager.pojo.entities.Payment;
+import com.mac.budgetentities.pojos.Bill;
+import com.mac.budgetentities.pojos.Payment;
 import java.util.List;
 import java.util.Objects;
 
