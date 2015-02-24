@@ -303,7 +303,17 @@ public class DateManipulator {
     }
 
     private static LocalDate createFixedDateFrom(Month month, int dayInMonth) {
-        return initDate(new Year(LocalDate.now().getYear()), month, Ordinal.getValue(dayInMonth));
+        return initDate(new Year(LocalDate.now().getYear()), month, getBestMatch(month, dayInMonth));
+    }
+    
+    private static Ordinal getBestMatch(Month month, int dayOfMonth){
+        int minDaysInMonth = month.minLength();
+        if(minDaysInMonth < dayOfMonth){
+            return Ordinal.getValue(minDaysInMonth);
+        }else if(dayOfMonth < 1){
+            return Ordinal.first;
+        }
+        return Ordinal.getValue(dayOfMonth);
     }
 
 //    public static void main(String[] args) {

@@ -51,24 +51,27 @@ public class BillProcessor {
      * Processes the bill in the Bill table, files payments if necessary
      */
     //@Scheduled(fixedDelay = 10000)
-    @Scheduled(cron = "0 0 6,9,12,15,18 * * *")    
+//    @Scheduled(cron = "0 0 6,9,12,15,18 * * *")
+    @Scheduled(cron = "0 */1 * * * *")    
     public void processBills() {
         BillDao billDAO = ctx.getBean(BillDao.class);
         List<Bill> allBills = billDAO.findAll();
         if (Objects.nonNull(allBills) && !allBills.isEmpty()) {
             List<Payment> paymentsToFile = ctx.getBean(ArrayList.class);
 
-            allBills.stream().forEach((bill) -> {
+//            allBills.stream().forEach((bill) -> {
+            for(Bill bill : allBills){
                 if (isBillComingDue(bill)) {
                     if (!isPaymentFiled(bill)) {
                         Payment payment = fileNewPayment(bill);
-                        if (Objects.nonNull(payment.getPaymentId())
-                                && Objects.nonNull(payment.getPaymentId()) && !payment.getPaymentId().isEmpty()) {
+                        if (Objects.nonNull(payment.getPaymentId()) 
+                                && !payment.getPaymentId().isEmpty()) {
                             paymentsToFile.add(payment);
+                            payment.print();
                         }
                     }
                 }
-            });
+            }
             PaymentFiler filer = ctx.getBean(PaymentFiler.class);
             PaymentDao pr = ctx.getBean(PaymentDao.class);
             filer.setup(pr, paymentsToFile);
@@ -86,6 +89,7 @@ public class BillProcessor {
         if (Objects.isNull(bill)) {
             return null;
         }
+        bill.print();
         LocalDate dueDate = getPSBMDate(bill);
         Payment singlePayment = ctx.getBean(Payment.class);
 
