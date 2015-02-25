@@ -158,8 +158,8 @@ public class BeanConfig {
     
     @Bean
     @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    public com.mac.budgetentities.pojos.Payment payment(){
-        return new com.mac.budgetentities.pojos.Payment();
+    public Payment payment(){
+        return new Payment();
     }
     
     @Bean

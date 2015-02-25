@@ -41,8 +41,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class BillProcessor {
 
-    private static final int COMING_DUE_TIMEFRAME = 15;
-    private static final int DAYSNOTICE_PRIOR_TO_PAYMENT = 10;
+    private static final int COMING_DUE_TIMEFRAME = 12;
+    private static final int DAYSNOTICE_PRIOR_TO_PAYMENT = 9;
 
     @Autowired
     private ApplicationContext ctx;
@@ -64,10 +64,12 @@ public class BillProcessor {
                 if (isBillComingDue(bill)) {
                     if (!isPaymentFiled(bill)) {
                         Payment payment = fileNewPayment(bill);
-                        if (Objects.nonNull(payment.getPaymentId()) 
+//                        payment.print();
+                        if (Objects.nonNull(payment) && Objects.nonNull(payment.getPaymentId()) 
                                 && !payment.getPaymentId().isEmpty()) {
-                            paymentsToFile.add(payment);
+                            System.out.print("Adding payment: ");
                             payment.print();
+                            paymentsToFile.add(payment);
                         }
                     }
                 }
@@ -89,26 +91,27 @@ public class BillProcessor {
         if (Objects.isNull(bill)) {
             return null;
         }
-        bill.print();
         LocalDate dueDate = getPSBMDate(bill);
-        Payment singlePayment = ctx.getBean(Payment.class);
+        Payment singlePayment = (Payment) ctx.getBean("payment");
 
         if (Objects.nonNull(dueDate)) {
             Date fileDate = ctx.getBean(Date.class);
             Instant instant = dueDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
             Date due = Date.from(instant);
+            System.out.println("dueDate: " + dueDate);
 
             HashFunction hf = Hashing.md5();
             HashCode hc = hf.newHasher()
                     .putLong(due.getTime())
                     .putString(bill.getBillId(), Charsets.UTF_8)
-                    .putString(bill.getBillOwner().getUserId(), Charsets.UTF_8).hash();
+                    .putString(bill.getBillOwner().getUserId(), Charsets.UTF_8)
+                    .putString(bill.getBillName(), Charsets.UTF_8)
+                    .putString(bill.getBillSource(), Charsets.UTF_8).hash();
 
             singlePayment.setPaymentId(hc.toString());
             singlePayment.setPaymentBillId(bill);
             singlePayment.setPaymentUserId(bill.getBillOwner());
             singlePayment.setPaymentFilingDate(fileDate);
-
             singlePayment.setPaymentDueDate(due);
         }
         return singlePayment;

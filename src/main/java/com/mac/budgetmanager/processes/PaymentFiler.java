@@ -43,6 +43,7 @@ public class PaymentFiler implements Runnable{
     public void run() {
         if(Objects.nonNull(repo) && Objects.nonNull(paymentsToFile)){
             for(Payment p : paymentsToFile){
+                p.print();
                 repo.create(p);
             }
             clear();
