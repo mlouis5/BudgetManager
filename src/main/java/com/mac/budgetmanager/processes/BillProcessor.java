@@ -20,6 +20,7 @@ import com.mac.budgetentities.pojos.Payment;
 import com.mac.common.utilities.dates.DateManipulator;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,7 +35,7 @@ import org.springframework.stereotype.Component;
 /**
  * BillProcessor handles the task of filing payments based on information<br>
  * contained within a known bill, for all bills.
- * 
+ *
  * @author MacDerson Louis
  * @version 1.0.0
  */
@@ -51,58 +52,59 @@ public class BillProcessor {
      * Processes the bill in the Bill table, files payments if necessary
      */
     //@Scheduled(fixedDelay = 10000)
-//    @Scheduled(cron = "0 0 6,9,12,15,18 * * *")
-    @Scheduled(cron = "0 */1 * * * *")    
+//    @Scheduled(cron = "0 0 */2 * * *")
+    @Scheduled(cron = "0 */1 * * * *")
     public void processBills() {
         BillDao billDAO = ctx.getBean(BillDao.class);
         List<Bill> allBills = billDAO.findAll();
         if (Objects.nonNull(allBills) && !allBills.isEmpty()) {
-            List<Payment> paymentsToFile = ctx.getBean(ArrayList.class);
+            List<Payment> paymentsToFile = new ArrayList();
 
-//            allBills.stream().forEach((bill) -> {
-            for(Bill bill : allBills){
+            allBills.stream().forEach((bill) -> {
                 if (isBillComingDue(bill)) {
                     if (!isPaymentFiled(bill)) {
-                        Payment payment = fileNewPayment(bill);
-//                        payment.print();
-                        if (Objects.nonNull(payment) && Objects.nonNull(payment.getPaymentId()) 
+                        Payment payment = generatePayment(bill);
+                        if (Objects.nonNull(payment) && Objects.nonNull(payment.getPaymentId())
                                 && !payment.getPaymentId().isEmpty()) {
-                            System.out.print("Adding payment: ");
-                            payment.print();
                             paymentsToFile.add(payment);
                         }
                     }
                 }
+            });
+            if (!paymentsToFile.isEmpty()) {
+                PaymentFiler filer = ctx.getBean(PaymentFiler.class);
+                PaymentDao pr = ctx.getBean(PaymentDao.class);
+                filer.setup(pr, paymentsToFile);
+                ThreadPoolTaskExecutor executor = ctx.getBean(ThreadPoolTaskExecutor.class);
+                executor.execute(filer);
             }
-            PaymentFiler filer = ctx.getBean(PaymentFiler.class);
-            PaymentDao pr = ctx.getBean(PaymentDao.class);
-            filer.setup(pr, paymentsToFile);
-            ThreadPoolTaskExecutor executor = ctx.getBean(ThreadPoolTaskExecutor.class);
-            executor.execute(filer);
         }
     }
 
     /**
      * Creates a new Payment to be filed (Added to the payment table in db).
+     *
      * @param bill The Bill with which the created payment is to be associated.
      * @return a Payment
      */
-    private Payment fileNewPayment(Bill bill) {
+    private Payment generatePayment(Bill bill) {
         if (Objects.isNull(bill)) {
             return null;
         }
         LocalDate dueDate = getPSBMDate(bill);
-        Payment singlePayment = (Payment) ctx.getBean("payment");
+        Payment singlePayment = new Payment();//(Payment) ctx.getBean("payment");
 
         if (Objects.nonNull(dueDate)) {
             Date fileDate = ctx.getBean(Date.class);
             Instant instant = dueDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
             Date due = Date.from(instant);
-            System.out.println("dueDate: " + dueDate);
+//            System.out.println("dueDate: " + dueDate + "\ttime: " + due.getTime());
 
             HashFunction hf = Hashing.md5();
             HashCode hc = hf.newHasher()
-                    .putLong(due.getTime())
+                    .putInt(dueDate.getYear())
+                    .putInt(dueDate.getMonthValue())
+                    .putInt(dueDate.getDayOfMonth())
                     .putString(bill.getBillId(), Charsets.UTF_8)
                     .putString(bill.getBillOwner().getUserId(), Charsets.UTF_8)
                     .putString(bill.getBillName(), Charsets.UTF_8)
@@ -120,13 +122,26 @@ public class BillProcessor {
     /**
      * Returns the LocalDate that this payment should be paid.<br>
      * Note: it's entirely possible that this date could be in the past.
-     * @param bill The bill for which to calculate the PSBM.<br>The date will
-     * be calculated for the current month if possible.
+     *
+     * @param bill The bill for which to calculate the PSBM.<br>The date will be
+     * calculated for the current month if possible.
      * @return The date that this bill should be due for the current month.
      */
     private LocalDate getPSBMDate(Bill bill) {
         LocalDate dueDate = DateManipulator.formMostAccurateFromDay(bill.getBillDueDate());
-        return DateManipulator.businessDaysPriorTo(DAYSNOTICE_PRIOR_TO_PAYMENT, dueDate);
+        dueDate = DateManipulator.businessDaysPriorTo(DAYSNOTICE_PRIOR_TO_PAYMENT, dueDate);
+
+        LocalDate now = LocalDate.now().atStartOfDay()
+                .atZone(ZoneId.systemDefault()).toInstant()
+                .atZone(ZoneId.systemDefault()).toLocalDate();
+
+        dueDate = dueDate.atStartOfDay().atZone(ZoneId.systemDefault())
+                .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        if (dueDate.isBefore(now)) {
+            dueDate = now;
+        }
+        return dueDate;
     }
 
     /**
@@ -134,6 +149,7 @@ public class BillProcessor {
      * <pre>
      *  COMING_DUE_TIMEFRAME
      * </pre>
+     *
      * @param bill
      * @return true or false.
      */
@@ -146,17 +162,26 @@ public class BillProcessor {
     /**
      * Determines if a payment has already been filed for this payment,<br>
      * for the month in which it is due.
+     *
      * @param bill the Bill in question.
      * @return true or false (false) will see a new payment generated, and <br>
      * added to the payment table).
      */
     private boolean isPaymentFiled(Bill bill) {
-        Payment aPmt = fileNewPayment(bill);
-        List<Payment> payments = bill.getPaymentList();
-        if (Objects.nonNull(payments) && !payments.isEmpty()) {
-            if (payments.stream().filter((payment) -> (Objects.nonNull(payment)))
-                    .anyMatch((pmtToCompare) -> (pmtToCompare.hashCode() == aPmt.hashCode()))) {
-                return true;
+        Payment aPmt = generatePayment(bill);
+        System.out.println("aPmt");
+        aPmt.print();
+        if (!aPmt.getPaymentId().isEmpty()) {
+            List<Payment> payments = bill.getPaymentList();
+            if (Objects.nonNull(payments) && !payments.isEmpty()) {
+                for (Payment p : payments) {
+                    System.out.println("Comparing:");
+                    aPmt.print();
+                    p.print();
+                    if (aPmt.getPaymentId().equalsIgnoreCase(p.getPaymentId())) {
+                        return true;
+                    }
+                }
             }
         }
         return false;
