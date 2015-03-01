@@ -51,9 +51,7 @@ public class BillProcessor {
     /**
      * Processes the bill in the Bill table, files payments if necessary
      */
-    //@Scheduled(fixedDelay = 10000)
-//    @Scheduled(cron = "0 0 */2 * * *")
-    @Scheduled(cron = "0 */1 * * * *")
+    @Scheduled(cron = "0 0 */2 * * *")
     public void processBills() {
         BillDao billDAO = ctx.getBean(BillDao.class);
         List<Bill> allBills = billDAO.findAll();
@@ -92,13 +90,12 @@ public class BillProcessor {
             return null;
         }
         LocalDate dueDate = getPSBMDate(bill);
-        Payment singlePayment = new Payment();//(Payment) ctx.getBean("payment");
+        Payment singlePayment = new Payment();
 
         if (Objects.nonNull(dueDate)) {
             Date fileDate = ctx.getBean(Date.class);
             Instant instant = dueDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
             Date due = Date.from(instant);
-//            System.out.println("dueDate: " + dueDate + "\ttime: " + due.getTime());
 
             HashFunction hf = Hashing.md5();
             HashCode hc = hf.newHasher()
@@ -169,15 +166,10 @@ public class BillProcessor {
      */
     private boolean isPaymentFiled(Bill bill) {
         Payment aPmt = generatePayment(bill);
-        System.out.println("aPmt");
-        aPmt.print();
         if (!aPmt.getPaymentId().isEmpty()) {
             List<Payment> payments = bill.getPaymentList();
             if (Objects.nonNull(payments) && !payments.isEmpty()) {
                 for (Payment p : payments) {
-                    System.out.println("Comparing:");
-                    aPmt.print();
-                    p.print();
                     if (aPmt.getPaymentId().equalsIgnoreCase(p.getPaymentId())) {
                         return true;
                     }

@@ -50,9 +50,9 @@ public class PaymentNotifier {
     @Autowired
     private ApplicationContext ctx;
 
-    @Scheduled(cron = "0 2 6,12,16 * * *")
+//    @Scheduled(cron = "0 2 6,12,16 * * *")
 //    @Scheduled(fixedDelay = 13000)
-    @Scheduled(cron = "0 */2 * * * *")
+    @Scheduled(cron = "0 5 */2 * * *")
     public void notifyUsers() {
         PaymentDao paymentDAO = ctx.getBean(PaymentDao.class);
         List<Payment> allPayments = paymentDAO.findAll();
