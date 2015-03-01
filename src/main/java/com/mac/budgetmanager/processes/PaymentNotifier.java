@@ -50,8 +50,6 @@ public class PaymentNotifier {
     @Autowired
     private ApplicationContext ctx;
 
-//    @Scheduled(cron = "0 2 6,12,16 * * *")
-//    @Scheduled(fixedDelay = 13000)
     @Scheduled(cron = "0 5 */2 * * *")
     public void notifyUsers() {
         PaymentDao paymentDAO = ctx.getBean(PaymentDao.class);
@@ -149,8 +147,6 @@ public class PaymentNotifier {
             message.setTo(bill.getBillOwner().getUserEmail());
             message.setSubject(EMAIL_SUBJECT);
             message.setText(emailContent, true);
-//        message.addInline("myLogo", new ClassPathResource("img/mylogo.gif"));
-//        message.addAttachment("myDocument.pdf", new ClassPathResource("doc/myDocument.pdf"));
             JavaMailSenderImpl mailSender = ctx.getBean("gmailMailSender", JavaMailSenderImpl.class);
             mailSender.send(message.getMimeMessage());
             return true;
